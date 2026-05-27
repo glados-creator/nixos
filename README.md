@@ -49,7 +49,7 @@ main features:
     - k3s (k8s cluster)
     - ceph (... one day)
     - maybe VR
-    - sunshine (? maybe / maybe apollo one day)(i can't unlock sddm)
+    - sunshine (? maybe / maybe apollo one day)(rustdesk ?)(i can't unlock sddm)
 
 
 main programs (all):
