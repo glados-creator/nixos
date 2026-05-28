@@ -174,7 +174,7 @@
         nfs-utils
         xfsprogs
         # prog
-        python316
+        python315
         openjdk25
         rustup
         go
