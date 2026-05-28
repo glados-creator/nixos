@@ -7,3 +7,4 @@ result-*
 *.lock
 flake.lock
 **.env
+**.crt
