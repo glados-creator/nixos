@@ -1,0 +1,95 @@
+{
+  self,
+  inputs,
+  #     nixpkgs,
+  #     home-manager,
+  #     lanzaboote,
+  #     nix-ld,
+  ...
+}:
+{
+  flake.nixosConfigurations.astra = inputs.nixpkgs.lib.nixosSystem {
+    modules = [
+      self.nixosModules.astraConfig
+    ];
+  };
+
+  flake.nixosModules.astraConfig =
+    {
+      config,
+      pkgs,
+      lib,
+      stdenv,
+      ...
+    }:
+    {
+      imports = [
+        # self.nixosModules.astraHardware
+        #        lanzaboote.nixosModules.lanzaboote
+        #        nix-ld.nixosModules.nix-ld
+        #         ../../base/bootsb.nix
+        #         ../../base/nix-ld.nix
+        #
+        #                         ../../base/configuration.nix
+        #                         ../../base/kernel-amd.nix
+        #                         ../../base/install.nix
+        #                         ../../base/nvidia-latest.nix
+        #
+        #                         ../../features/k3s.nix
+        #                         ../../features/k3s-nvidia.nix
+        #                         ../../features/ceph.nix
+        #                         ../../features/tailscale.nix
+        #                         ../../features/sunshine.nix
+        #                         ../../features/alvr-wivrn.nix
+        #
+        #                         .# /hosts/astra/hardware-configuration.nix
+        #                         # ./hosts/astra/configuration.nix
+        #                         ./ceph.nix
+        #                         ./desktop.nix
+      ];
+
+      networking = {
+        hostName = "astra";
+        interfaces.enp6s0.useDHCP = true;
+        interfaces.enp6s0.wakeOnLan.enable = true;
+        defaultGateway = "192.168.1.254";
+        nameservers = [
+          "192.168.1.24" # rpi5a
+          "192.168.1.25"
+          "192.168.1.26" # rpi5b
+          "192.168.1.27"
+          "192.168.1.28" # rpi4a
+          "192.168.1.29"
+          "192.168.1.30" # rpi4b
+          "192.168.1.31"
+          "1.1.1.1"
+          "8.8.8.8"
+          "192.168.1.254" # router
+        ];
+      };
+
+      services.logind.settings.Login = {
+        HandlePowerKey = "hibernate";
+        IdleAction = "hibernate";
+        IdleActionSec = "30min";
+      };
+
+      users.users.glados = {
+        shell = pkgs.fish;
+        name = "glados";
+        isNormalUser = true;
+        extraGroups = [
+          "wheel"
+          "audio"
+          "video"
+          "input"
+          "render"
+          "networkmanager"
+          "systemd-journal"
+          "docker"
+          "kvm"
+          "libvirtd"
+        ];
+      };
+    };
+}

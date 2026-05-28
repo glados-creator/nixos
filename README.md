@@ -3,6 +3,8 @@ here is my new nixos config with the dendritic pattern
 thanks to 
 [![Ultimate NixOS Desktop: Niri, Noctalia Shell, and the Dendritic Pattern | Full Setup](https://img.youtube.com/vi/aNgujRXDTdE/0.jpg)](https://www.youtube.com/watch?v=aNgujRXDTdE)
 so everything is a flake module
+[mightyiam/dendritic github repo](https://github.com/mightyiam/dendritic)
+he's example here [vimjoyer/nixconf github](https://github.com/vimjoyer/nixconf)
 
 i grew up with windows so KDE plasma will be my main
 i did my beginning on arch but i am that tallented at screwing essential parts of the OS
@@ -13,6 +15,8 @@ yeah it could be easier but here we choose the hard path , or a VM or just a qui
 
 using unstable channel [build status](https://status.nixos.org/)
 browsing flakes [flakehub](https://flakehub.com/)
+or [github nix-community](https://github.com/nix-community)
+or [github nixOS](https://github.com/nixOS)
 
 my 3 principal machines:
     - astra (the big boy)
@@ -23,6 +27,20 @@ main features:
     - ... flake
     - latest kernel
     - home-manager
+    - specialisation
+
+    - nixpkgs
+    - flake-parts
+    - home-manager
+    - disko
+    - fenix
+    - vulnix
+    - nixpkgs-xr
+    - NUR
+    - nix-mineral
+    - stylix
+    - cachix 
+
     - zram
     - "secure boot" (lazoboot)(so yeah systemd-boot)
     - auto update

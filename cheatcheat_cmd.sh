@@ -1,6 +1,8 @@
 cd /etc/nixos
 
-nixfmt --indent=4
+nixfmt --indent=4 ./flake.nix
+treefmt ./
+vulnix --system
 
 # 1. Update flake inputs (get latest package versions)
 sudo nix flake update /etc/nixos
