@@ -36,7 +36,7 @@
       };
 
       # GNOME (supports both X11 and Wayland)
-      services.desktopManager.gnome.enable = true;
+      # services.desktopManager.gnome.enable = true;
 
       # Niri compositor (Wayland)
       programs.niri = {
@@ -45,13 +45,13 @@
       };
 
       # AwesomeWM (X11)
-      services.xserver.windowManager.awesome = {
-        enable = true;
-        luaModules = with pkgs.luaPackages; [
-          luafilesystem
-          lgi
-        ];
-      };
+      # services.xserver.windowManager.awesome = {
+      #   enable = true;
+      #   luaModules = with pkgs.luaPackages; [
+      #     luafilesystem
+      #     lgi
+      #   ];
+      # };
 
       # Additional packages for Wine support
       environment.systemPackages = with pkgs; [
