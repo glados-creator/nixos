@@ -40,6 +40,8 @@
             alacritty
             android-studio
             discord
+            localsend
+
 
             # Gaming / Windows compatibility
             steam
@@ -65,6 +67,7 @@
 
             cura-appimage
           ];
+          programs.kdeconnect.enable = true;
 
           services.blueman-applet.enable = true;
           programs.mangohud.enable = true;

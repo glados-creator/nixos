@@ -37,6 +37,7 @@
             ungoogled-chromium
             alacritty
             discord
+            localsend
 
             # Media / creative
             vlc
@@ -49,6 +50,7 @@
             fishPlugins.fzf-fish
             oh-my-fish
           ];
+          programs.kdeconnect.enable = true;
 
           programs.git = {
             enable = true;
