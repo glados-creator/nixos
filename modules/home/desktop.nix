@@ -13,6 +13,17 @@
       ...
     }:
     {
+
+      programs.kdeconnect = {
+  enable = true;
+  # package = pkgs.gnomeExtensions.gsconnect;
+};
+
+      services.rustdesk-server = {
+      enable = true;
+      openFirewall = true;
+    };
+
       # set local
       services.xserver.xkb = {
         layout = lib.mkForce "fr,us,ca,gb";

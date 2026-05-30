@@ -67,7 +67,6 @@
 
             cura-appimage
           ];
-          programs.kdeconnect.enable = true;
 
           services.blueman-applet.enable = true;
           programs.mangohud.enable = true;
