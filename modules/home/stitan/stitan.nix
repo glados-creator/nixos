@@ -13,62 +13,60 @@
       ...
     }:
     {
-      input.home-manager.nixosModules.home-manager = {
-        home-manager = {
-          useGlobalPkgs = false;
-          useUserPackages = true;
-          users.stitan =
-            {
-              config,
-              pkgs,
-              lib,
-              stdenv,
-              ...
-            }:
-            {
-              home.username = "stitan";
-              home.homeDirectory = "/home/stitan";
-              home.stateVersion = "26.05";
-              nixpkgs.config.allowUnfree = true;
+      # Import the Home Manager module from your flake input
+      imports = [ inputs.home-manager.nixosModules.home-manager ];
 
-              home.packages = with pkgs; [
-                home-manager
-                firefox
-                ungoogled-chromium
-                alacritty
-                discord
+      # Now configure home-manager for user 'glados'
+      home-manager.users.stitan =
+        {
+          config,
+          pkgs,
+          lib,
+          stdenv,
+          ...
+        }:
+        {
+          home.username = "stitan";
+          home.homeDirectory = "/home/stitan";
+          home.stateVersion = "26.05";
+          nixpkgs.config.allowUnfree = true;
 
-                # Media / creative
-                vlc
-                obs-studio
+          home.packages = with pkgs; [
+            home-manager
+            firefox
+            ungoogled-chromium
+            alacritty
+            discord
 
-                # Office
-                libreoffice-fresh
+            # Media / creative
+            vlc
+            obs-studio
 
-                # Utilities / system
-                fishPlugins.fzf-fish
-                oh-my-fish
-              ];
+            # Office
+            libreoffice-fresh
 
-              programs.git = {
-                enable = true;
-                settings.contents.user = {
-                  name = "glados";
-                  email = "79933806+glados-creator@users.noreply.github.com";
-                };
-              };
+            # Utilities / system
+            fishPlugins.fzf-fish
+            oh-my-fish
+          ];
 
-              programs.fish = {
-                enable = true;
-                shellAliases = {
-                  ll = "eza -larth";
-                  eza = "ls"; # alias eza -> ls
-                  bat = "cat"; # alisa bat -> cat
-                  # rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#astra";
-                };
-              };
+          programs.git = {
+            enable = true;
+            settings.contents.user = {
+              name = "glados";
+              email = "79933806+glados-creator@users.noreply.github.com";
             };
+          };
+
+          programs.fish = {
+            enable = true;
+            shellAliases = {
+              ll = "eza -larth";
+              eza = "ls"; # alias eza -> ls
+              bat = "cat"; # alisa bat -> cat
+              # rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#astra";
+            };
+          };
         };
-      };
     };
 }
