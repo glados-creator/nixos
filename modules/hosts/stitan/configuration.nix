@@ -103,7 +103,7 @@
       };
 
       boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_18;
-      
+
       users.users.stitan = {
         name = "stitan";
         shell = pkgs.fish;

@@ -82,10 +82,15 @@
         gsettings-desktop-schemas
         # required for vr
         libsForQt5.qt5.qtmultimedia
+
+        bottles # windows ?
+        vulkan-loader
       ];
 
       # SDDM configuration
       services.displayManager.sddm.theme = "breeze-dark";
+
+      programs.gamemode.enable = true;
 
       programs.gamescope = {
         enable = true;

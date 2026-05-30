@@ -41,7 +41,7 @@
             android-studio
             discord
             localsend
-
+            rustdesk
 
             # Gaming / Windows compatibility
             steam
