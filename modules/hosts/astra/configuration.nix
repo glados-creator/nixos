@@ -40,7 +40,7 @@
 
         self.nixosModules.astraCeph
         self.nixosModules.gladosDesktop
-        # self.nixosModules.gladosHome
+        self.nixosModules.gladosHome
       ];
 
       networking = {

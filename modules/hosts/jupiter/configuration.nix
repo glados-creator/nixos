@@ -38,7 +38,7 @@
 
         self.nixosModules.jupiterCeph
         self.nixosModules.gladosDesktop
-        # self.nixosModules.gladosHome
+        self.nixosModules.gladosHome
       ];
 
       networking = {

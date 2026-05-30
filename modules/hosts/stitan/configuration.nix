@@ -37,7 +37,7 @@
 
         self.nixosModules.jupiterCeph
         self.nixosModules.stitanDesktop
-        # self.nixosModules.stitanHome
+        self.nixosModules.stitanHome
       ];
 
       networking = {
