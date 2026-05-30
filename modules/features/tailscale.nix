@@ -13,6 +13,7 @@
       ...
     }:
     {
+      # or zerotierone
       services.tailscale = {
         enable = true;
         extraUpFlags = [ "--accept-dns=false" ];

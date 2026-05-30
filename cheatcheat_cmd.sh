@@ -1,5 +1,5 @@
 cd /etc/nixos
-
+# lib.fakeHash
 nixfmt --indent=4 ./flake.nix
 treefmt ./
 vulnix --system
