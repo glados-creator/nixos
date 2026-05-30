@@ -15,14 +15,14 @@
     {
 
       programs.kdeconnect = {
-  enable = true;
-  # package = pkgs.gnomeExtensions.gsconnect;
-};
+        enable = true;
+        # package = pkgs.gnomeExtensions.gsconnect;
+      };
 
-      services.rustdesk-server = {
-      enable = true;
-      openFirewall = true;
-    };
+      # services.rustdesk-server = {
+      #   enable = true;
+      #   openFirewall = true;
+      # };
 
       # set local
       services.xserver.xkb = {

@@ -36,7 +36,7 @@
         self.nixosModules.ceph
         self.nixosModules.tailscale
         self.nixosModules.sunshine
-        # self.nixosModules.wivrn
+        self.nixosModules.VR
 
         self.nixosModules.astraCeph
         self.nixosModules.gladosDesktop

@@ -23,7 +23,7 @@
       # nix allow proprietary pkgs
       nixpkgs.config.allowUnfree = true;
       # fix download buffer
-      nix.settings.download-buffer-size = 2147483648; # 2GB in bytes
+      nix.settings.download-buffer-size = 10737418240; # 10GB in bytes
       # auto updates
       system.autoUpgrade.enable = true;
       # nix garbage collector
