@@ -30,6 +30,7 @@
       nix.gc.automatic = true;
       # compact duplicate config files
       nix.settings.auto-optimise-store = true;
+      boot.kernelPackages = pkgs.linuxPackages_latest;
       boot = {
         kernelParams = [
           "systemd.log_level=info" # debug
