@@ -96,6 +96,19 @@
             };
           };
 
+          programs.neovim = {
+            enable = true;
+            withPython3 = true;
+            withNodeJs = true;
+            waylandSupport = true;
+            plugins = with pkgs.vimPlugins;
+                      [
+                        yankring
+                        vim-nix 
+                      ];        
+            initLua = "";
+          };
+
           programs.fish = {
             enable = true;
             shellAliases = {
