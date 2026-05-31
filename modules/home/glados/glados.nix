@@ -103,7 +103,7 @@
             waylandSupport = true;
             plugins = with pkgs.vimPlugins;
                       [
-                        yankring
+                        YankRing-vim
                         vim-nix 
                       ];        
             initLua = "";
