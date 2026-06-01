@@ -16,6 +16,52 @@
       # Import the Home Manager module from your flake input
       imports = [ inputs.home-manager.nixosModules.home-manager ];
 
+      environment.systemPackages = with pkgs; [
+        firefox
+        chromium
+        alacritty
+        android-studio
+        discord
+        localsend
+        rustdesk
+        distrobox
+        distroshelf
+
+        # Gaming / Windows compatibility
+        steam
+        # wineWow64Packages.full
+        # winetricks
+        lutris
+        heroic
+
+        # Media / creative
+        blender
+        krita
+        gimp
+        vlc
+        inkscape
+        obs-studio
+
+        # Office
+        libreoffice-fresh
+
+        # Utilities / system
+        fishPlugins.fzf-fish
+        oh-my-fish
+      ];
+
+      programs.neovim = {
+        enable = true;
+        withPython3 = true;
+        withNodeJs = true;
+        # waylandSupport = true;
+        # plugins = with pkgs.vimPlugins; [
+        #   YankRing-vim
+        #   vim-nix
+        # ];
+        # initLua = "";
+      };
+
       # Now configure home-manager for user 'glados'
       home-manager.users.glados =
         {
@@ -84,8 +130,9 @@
               ];
               userSettings = {
                 "editor.fontSize" = 13;
-                "editor.minimap.enabled" = false;
+                # "editor.minimap.enabled" = false;
                 "terminal.integrated.shell.linux" = "fish";
+                "workbench.sideBar.location" = "right";
               };
             };
           };
@@ -103,11 +150,10 @@
             withPython3 = true;
             withNodeJs = true;
             waylandSupport = true;
-            plugins = with pkgs.vimPlugins;
-                      [
-                        YankRing-vim
-                        vim-nix 
-                      ];        
+            plugins = with pkgs.vimPlugins; [
+              YankRing-vim
+              vim-nix
+            ];
             initLua = "";
           };
 
