@@ -41,6 +41,9 @@
         };
       };
 
+      services.homed.enable = true;
+      services.nscd.enable = true;
+
       programs.appimage = {
         enable = true;
         binfmt = true;
