@@ -33,6 +33,8 @@
         opencl-caps-viewer
         libva-vdpau-driver
         libvdpau-va-gl
+        nvidia-vaapi-driver
+        nv-codec-headers
       ];
       hardware.nvidia-container-toolkit.enable = true;
       hardware.nvidia-container-toolkit.mount-nvidia-executables = true;
