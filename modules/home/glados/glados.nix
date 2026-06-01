@@ -42,6 +42,8 @@
             discord
             localsend
             rustdesk
+            distrobox
+            distroshelf
 
             # Gaming / Windows compatibility
             steam
