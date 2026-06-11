@@ -19,10 +19,10 @@
         # package = pkgs.gnomeExtensions.gsconnect;
       };
 
-      # services.rustdesk-server = {
-      #   enable = true;
-      #   openFirewall = true;
-      # };
+      services.rustdesk-server = {
+        enable = true;
+        openFirewall = true;
+      };
 
       # set local
       services.xserver.xkb = {
@@ -91,8 +91,7 @@
 
         glib-networking # GLib network extensions
         gsettings-desktop-schemas
-        # required for vr
-        libsForQt5.qt5.qtmultimedia
+        qt6.qtmultimedia
 
         bottles # windows ?
         vulkan-loader

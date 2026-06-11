@@ -15,11 +15,9 @@
     # NUR.url = "github:nix-community/NUR";
     # nix-mineral.url = "github:nix-community/nix-mineral";
     # stylix.url = "github:nix-community/stylix";
-    lanzaboote.url = "github:nix-community/lanzaboote/v1.0.0";
+    lanzaboote.url = "github:nix-community/lanzaboote";
     nix-ld.url = "github:Mic92/nix-ld";
   };
 
-  outputs =
-    inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }

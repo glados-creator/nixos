@@ -1,0 +1,1 @@
+flatpak run --command=alvr_launcher com.valvesoftware.Steam --share=network
