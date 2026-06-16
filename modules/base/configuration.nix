@@ -19,6 +19,7 @@
       nix.settings.experimental-features = [
         "nix-command"
         "flakes"
+        # "auto-allocate-uids"
       ];
       # nix allow proprietary pkgs
       nixpkgs.config.allowUnfree = true;
@@ -30,6 +31,7 @@
       nix.gc.automatic = true;
       # compact duplicate config files
       nix.settings.auto-optimise-store = true;
+      # nix.settings.auto-allocate-uids = true;
       boot.kernelPackages = pkgs.linuxPackages_latest;
       boot = {
         kernelParams = [
