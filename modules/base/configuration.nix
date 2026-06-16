@@ -41,6 +41,7 @@
         # Boot kernel parameters
         # kernelParams = amd vs intel
         # bleuthooth motherducker
+        blacklistedKernelModules = ["rtl8821cu"];
         extraModulePackages = with config.boot.kernelPackages; [
           rtw88_8821cu
         ];
