@@ -31,7 +31,7 @@
       };
 
       # Enable kde plasma login manager as display manager
-      displayManager.plasma-login-manager.enable = true;
+      services.displayManager.plasma-login-manager.enable = true;
       services.displayManager.defaultSession = "plasma"; # Default to Plasma
       services.xserver.wacom.enable = true; # wacom graphical tablet support
 
