@@ -40,34 +40,23 @@
         ];
         # Boot kernel parameters
         # kernelParams = amd vs intel
-        # bleuthooth motherducker
-        blacklistedKernelModules = ["rtl8821cu"];
-        extraModulePackages = with config.boot.kernelPackages; [
-          rtw88_8821cu
-        ];
         # --- Kernel modules (VFIO + Wacom / HID) ---
         kernelModules = [
-          "kvm"
-          # "vfio_pci"
-          "vfio"
-          "vfio_iommu_type1"
-          # "vfio_virqfd"
-
-          # Wacom / tablet support
-          "wacom"
-          "hid"
-          "uhid"
-          "usbhid"
-          "hid-generic"
-
-          "8821cu" # bleutooth
-          "hid_xpadneo" # xbox controller
-
-          "ceph"
-          "rbd" # ceph
-          "xfs"
-          "overlay"
-          "fuse"
+            "kvm"
+            "vfio"
+            "vfio_iommu_type1"
+            # Wacom / tablet
+            "wacom"
+            "hid"
+            "uhid"
+            "usbhid"
+            "hid-generic"
+            "hid_xpadneo"
+            "ceph"
+            "rbd"
+            "xfs"
+            "overlay"
+            "fuse"
         ];
         # nfs
         supportedFilesystems = [
@@ -76,6 +65,7 @@
           "xfs"
         ];
       };
+      hardware.enableRedistributableFirmware = true;
       # enable zram
       zramSwap.enable = true;
       # clean /tmp
