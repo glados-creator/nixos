@@ -42,7 +42,7 @@
         # kernelParams = amd vs intel
         # bleuthooth motherducker
         extraModulePackages = with config.boot.kernelPackages; [
-          rtl8821cu
+          rtw88_8821cu
         ];
         # --- Kernel modules (VFIO + Wacom / HID) ---
         kernelModules = [
