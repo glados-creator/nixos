@@ -30,14 +30,16 @@
         options = lib.mkForce "grp:win_shift_toggle,eurosign:e";
       };
 
-      # Enable SDDM as display manager
-      services.displayManager.sddm.enable = true;
+      # Enable kde plasma login manager as display manager
+      displayManager.plasma-login-manager.enable = true;
+      services.displayManager.defaultSession = "plasma"; # Default to Plasma
       services.xserver.wacom.enable = true; # wacom graphical tablet support
 
       # Enable both X11 and Wayland sessions
       services.xserver.enable = true;
-      services.desktopManager.plasma6.enable = true; # Plasma 5 for X11
-      services.xserver.desktopManager.xfce.enable = true; # XFCE as alternative X11
+      services.desktopManager.plasma6.enable = true; # Plasma 6
+      services.xserver.desktopManager.xfce.enable = true; # XFCE 
+      services.xserver.desktopManager.cinnamon.enable = true; # Cinnamon 
 
       # Wayland compositors
       programs.hyprland.enable = true;
@@ -54,15 +56,6 @@
         enable = true;
         # package = pkgs.niri;
       };
-
-      # AwesomeWM (X11)
-      # services.xserver.windowManager.awesome = {
-      #   enable = true;
-      #   luaModules = with pkgs.luaPackages; [
-      #     luafilesystem
-      #     lgi
-      #   ];
-      # };
 
       # Additional packages for Wine support
       environment.systemPackages = with pkgs; [

@@ -70,6 +70,8 @@
         # Global default gateway and DNS
         defaultGateway = "192.168.1.254";
         nameservers = [
+          "192.168.1.1"
+          "192.168.1.2"
           "192.168.1.24" # rpi5a
           "192.168.1.25"
           "192.168.1.26" # rpi5b

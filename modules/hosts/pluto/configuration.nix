@@ -1,20 +1,17 @@
 {
   self,
   inputs,
-  #     nixpkgs,
-  #     home-manager,
-  #     lanzaboote,
-  #     nix-ld,
   ...
 }:
 {
-  flake.nixosConfigurations.astra = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.pluto = inputs.nixpkgs.lib.nixosSystem {
     modules = [
-      self.nixosModules.astraConfig
+      self.nixosModules.plutoConfig
     ];
   };
 
-  flake.nixosModules.astraConfig =
+  flake.nixosModules.plutoConfig =
+
     {
       config,
       pkgs,
@@ -23,30 +20,26 @@
       ...
     }:
     {
+
       imports = [
         inputs.lanzaboote.nixosModules.lanzaboote
         inputs.nix-ld.nixosModules.nix-ld
 
         self.nixosModules.base
         self.nixosModules.bootsb
-        self.nixosModules.nvidia-latest
+        self.nixosModules.plutoamdgpu
 
-        self.nixosModules.k3s
-        self.nixosModules.k3sGpu
-        self.nixosModules.ceph
         self.nixosModules.tailscale
         self.nixosModules.sunshine
-        self.nixosModules.VR
-
-        self.nixosModules.astraCeph
+        
         self.nixosModules.gladosDesktop
         self.nixosModules.gladosHome
       ];
 
       networking = {
-        hostName = "astra";
-        interfaces.enp6s0.useDHCP = true;
-        interfaces.enp6s0.wakeOnLan.enable = true;
+        hostName = "pluto";
+        interfaces.enp5s0.useDHCP = true;
+        interfaces.enp5s0.wakeOnLan.enable = true;
         defaultGateway = "192.168.1.254";
         nameservers = [
           "192.168.1.1"
