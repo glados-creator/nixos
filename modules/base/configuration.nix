@@ -77,5 +77,6 @@
         firewall.enable = true;
         dhcpcd.enable = false; # not needed with NetworkManager
       };
+      networking.nftables.enable = true;
     };
 }

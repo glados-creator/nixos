@@ -170,6 +170,7 @@
         nmap
         iftop
         rsync
+        dnsutils
         # disk
         lvm2
         util-linux
