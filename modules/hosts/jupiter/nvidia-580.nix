@@ -15,7 +15,7 @@
     {
       nixpkgs.config.nvidia.acceptLicense = true;
       services.xserver.videoDrivers = [ "nvidia" ];
-      
+
       hardware.graphics = {
         enable = true;
         enable32Bit = true;

@@ -15,7 +15,62 @@
     {
       # local
       time.timeZone = "Europe/Paris";
-      i18n.defaultLocale = "fr_FR.UTF-8";
+      i18n = {
+        defaultLocale = "en_US.UTF-8";
+        extraLocaleSettings = {
+          LC_TIME = "fr_FR.UTF-8"; # French date/time format
+          LC_MONETARY = "fr_FR.UTF-8"; # Euro currency
+        };
+      };
+
+      # set local
+      services.xserver.xkb = {
+        layout = lib.mkForce "fr,us,ca,gb";
+        options = lib.mkForce "grp:win_shift_toggle,eurosign:e";
+      };
+
+      # enable zram
+      zramSwap.enable = true;
+      # clean /tmp
+      boot.tmp.cleanOnBoot = true;
+      # network
+      systemd.services.NetworkManager-wait-online.enable = false; # disables the 1 minute delay
+      networking = {
+        networkmanager.enable = true;
+        firewall.enable = true;
+        dhcpcd.enable = false; # not needed with NetworkManager
+      };
+      networking.nftables.enable = true;
+
+      hardware.enableRedistributableFirmware = true;
+      hardware.enableAllFirmware = true;
+      hardware.steam-hardware.enable = true;
+      hardware.inputmodule.enable = true;
+      hardware.xpad-noone.enable = true; # Xpad driver
+      hardware.xone.enable = true; # xone driver for Xbox One
+      hardware.xpadneo.enable = true; # Enable the xpadneo driver for Xbox One wireless controllers
+
+      # bleutooth motherducker
+      hardware.bluetooth.enable = true;
+      hardware.bluetooth.powerOnBoot = true;
+      hardware.usb-modeswitch.enable = true;
+      services.udev.packages = with pkgs; [ usb-modeswitch ];
+      services.blueman.enable = true;
+
+      services.udev.extraRules = ''
+        # Run usb-modeswitch when your specific device is detected
+        ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="${lib.getExe pkgs.usb-modeswitch} -K -v 0bda -p 1a2b"
+      '';
+
+      # audio
+      security.rtkit.enable = true;
+      services.pipewire = {
+        enable = true;
+        wireplumber.enable = true;
+        jack.enable = true;
+        alsa.enable = true;
+        pulse.enable = true;
+      };
 
       programs.dconf.enable = true;
       # Polkit for authentication dialogs
@@ -42,7 +97,7 @@
       };
 
       services.homed.enable = true;
-      services.nscd.enable = true;
+      services.nscd.enable = true; # Name Service Cache Deamon , speed up ls
 
       programs.appimage = {
         enable = true;
@@ -50,29 +105,6 @@
       };
 
       services.flatpak.enable = true;
-
-      hardware.enableAllFirmware = true;
-      hardware.steam-hardware.enable = true;
-      hardware.inputmodule.enable = true;
-      hardware.xpad-noone.enable = true; # Xpad driver
-      hardware.xone.enable = true; # xone driver for Xbox One
-      hardware.xpadneo.enable = true; # Enable the xpadneo driver for Xbox One wireless controllers
-
-      # bluetooth
-      hardware.bluetooth.enable = true;
-      services.blueman.enable = true;
-      # bleutooth motherducker
-      services.udev.packages = with pkgs; [ usb-modeswitch ];
-
-      # audio
-      security.rtkit.enable = true;
-      services.pipewire = {
-        enable = true;
-        wireplumber.enable = true;
-        jack.enable = true;
-        alsa.enable = true;
-        pulse.enable = true;
-      };
 
       # ssh
       programs.ssh = {

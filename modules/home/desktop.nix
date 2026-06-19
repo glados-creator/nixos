@@ -13,7 +13,6 @@
       ...
     }:
     {
-
       programs.kdeconnect = {
         enable = true;
         # package = pkgs.gnomeExtensions.gsconnect;
@@ -24,12 +23,6 @@
         openFirewall = true;
       };
 
-      # set local
-      services.xserver.xkb = {
-        layout = lib.mkForce "fr,us,ca,gb";
-        options = lib.mkForce "grp:win_shift_toggle,eurosign:e";
-      };
-
       # Enable kde plasma login manager as display manager
       services.displayManager.plasma-login-manager.enable = true;
       services.displayManager.defaultSession = "plasma"; # Default to Plasma
@@ -38,8 +31,8 @@
       # Enable both X11 and Wayland sessions
       services.xserver.enable = true;
       services.desktopManager.plasma6.enable = true; # Plasma 6
-      services.xserver.desktopManager.xfce.enable = true; # XFCE 
-      services.xserver.desktopManager.cinnamon.enable = true; # Cinnamon 
+      services.xserver.desktopManager.xfce.enable = true; # XFCE
+      services.xserver.desktopManager.cinnamon.enable = true; # Cinnamon
 
       # Wayland compositors
       programs.hyprland.enable = true;

@@ -42,21 +42,21 @@
         # kernelParams = amd vs intel
         # --- Kernel modules (VFIO + Wacom / HID) ---
         kernelModules = [
-            "kvm"
-            "vfio"
-            "vfio_iommu_type1"
-            # Wacom / tablet
-            "wacom"
-            "hid"
-            "uhid"
-            "usbhid"
-            "hid-generic"
-            "hid_xpadneo"
-            "ceph"
-            "rbd"
-            "xfs"
-            "overlay"
-            "fuse"
+          "kvm"
+          "vfio"
+          "vfio_iommu_type1"
+          # Wacom / tablet
+          "wacom"
+          "hid"
+          "uhid"
+          "usbhid"
+          "hid-generic"
+          "hid_xpadneo"
+          "ceph"
+          "rbd"
+          "xfs"
+          "overlay"
+          "fuse"
         ];
         # nfs
         supportedFilesystems = [
@@ -65,18 +65,5 @@
           "xfs"
         ];
       };
-      hardware.enableRedistributableFirmware = true;
-      # enable zram
-      zramSwap.enable = true;
-      # clean /tmp
-      boot.tmp.cleanOnBoot = true;
-      # network
-      systemd.services.NetworkManager-wait-online.enable = false; # disables the 1 minute delay
-      networking = {
-        networkmanager.enable = true;
-        firewall.enable = true;
-        dhcpcd.enable = false; # not needed with NetworkManager
-      };
-      networking.nftables.enable = true;
     };
 }

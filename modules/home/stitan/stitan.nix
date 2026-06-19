@@ -23,7 +23,7 @@
         discord
         localsend
         rustdesk
-        
+
         # Media / creative
         krita
         gimp
@@ -110,6 +110,7 @@
                 # "editor.minimap.enabled" = false;
                 "terminal.integrated.shell.linux" = "fish";
                 "workbench.sideBar.location" = "right";
+                "diffEditor.ignoreTrimWhitespace" = false;
               };
             };
           };

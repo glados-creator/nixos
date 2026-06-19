@@ -31,7 +31,7 @@
 
         self.nixosModules.tailscale
         self.nixosModules.sunshine
-        
+
         self.nixosModules.gladosDesktop
         self.nixosModules.gladosHome
       ];

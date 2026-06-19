@@ -78,6 +78,12 @@
           home.stateVersion = "26.05";
           nixpkgs.config.allowUnfree = true;
 
+          # make .config writable
+          home.file = {
+            ".config".source = "/home/glados/dotfiles/.config";
+            ".local".source = "/home/glados/dotfiles/.local";
+          };
+
           # Developer and desktop packages for Glados
           home.packages = with pkgs; [
             home-manager
@@ -133,6 +139,7 @@
                 # "editor.minimap.enabled" = false;
                 "terminal.integrated.shell.linux" = "fish";
                 "workbench.sideBar.location" = "right";
+                "diffEditor.ignoreTrimWhitespace" = false;
               };
             };
           };
