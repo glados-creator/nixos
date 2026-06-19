@@ -89,8 +89,6 @@
             # Utilities / system
             fishPlugins.fzf-fish
             oh-my-fish
-
-            cura-appimage
           ];
 
           services.blueman-applet.enable = true;

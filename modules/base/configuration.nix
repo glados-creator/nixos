@@ -32,6 +32,8 @@
       # compact duplicate config files
       nix.settings.auto-optimise-store = true;
       # nix.settings.auto-allocate-uids = true;
+      nix.settings.allow-import-from-derivation = true;
+      nix.settings.pure-eval = false;  # sorry nixos
       boot.kernelPackages = pkgs.linuxPackages_latest;
       boot = {
         kernelParams = [
