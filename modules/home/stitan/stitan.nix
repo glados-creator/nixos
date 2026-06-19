@@ -16,6 +16,41 @@
       # Import the Home Manager module from your flake input
       imports = [ inputs.home-manager.nixosModules.home-manager ];
 
+      environment.systemPackages = with pkgs; [
+        firefox
+        chromium
+        alacritty
+        discord
+        localsend
+        rustdesk
+        
+        # Media / creative
+        krita
+        gimp
+        vlc
+        inkscape
+        obs-studio
+
+        # Office
+        libreoffice-fresh
+
+        # Utilities / system
+        fishPlugins.fzf-fish
+        oh-my-fish
+      ];
+
+      programs.neovim = {
+        enable = true;
+        withPython3 = true;
+        withNodeJs = true;
+        # waylandSupport = true;
+        # plugins = with pkgs.vimPlugins; [
+        #   YankRing-vim
+        #   vim-nix
+        # ];
+        # initLua = "";
+      };
+
       # Now configure home-manager for user 'glados'
       home-manager.users.stitan =
         {
@@ -31,16 +66,21 @@
           home.stateVersion = "26.05";
           nixpkgs.config.allowUnfree = true;
 
+          # Developer and desktop packages for saturn's titan
           home.packages = with pkgs; [
             home-manager
             firefox
-            ungoogled-chromium
+            chromium
             alacritty
             discord
             localsend
+            rustdesk
 
             # Media / creative
+            krita
+            gimp
             vlc
+            inkscape
             obs-studio
 
             # Office
@@ -49,7 +89,30 @@
             # Utilities / system
             fishPlugins.fzf-fish
             oh-my-fish
+
+            cura-appimage
           ];
+
+          services.blueman-applet.enable = true;
+          # programs.mangohud.enable = true;
+
+          programs.vscodium = {
+            enable = true;
+            package = pkgs.vscodium; # This ensures you use VSCodium instead of VS Code
+            profiles.default = {
+              extensions = with pkgs.vscode-extensions; [
+                # 3timeslazy.vscodium-devpodcontainers
+                # jeanp413.open-remote-ssh-0.0.49-universal
+                ms-python.python
+              ];
+              userSettings = {
+                "editor.fontSize" = 13;
+                # "editor.minimap.enabled" = false;
+                "terminal.integrated.shell.linux" = "fish";
+                "workbench.sideBar.location" = "right";
+              };
+            };
+          };
 
           programs.git = {
             enable = true;
@@ -57,6 +120,18 @@
               name = "glados";
               email = "79933806+glados-creator@users.noreply.github.com";
             };
+          };
+
+          programs.neovim = {
+            enable = true;
+            withPython3 = true;
+            withNodeJs = true;
+            waylandSupport = true;
+            plugins = with pkgs.vimPlugins; [
+              YankRing-vim
+              vim-nix
+            ];
+            initLua = "";
           };
 
           programs.fish = {

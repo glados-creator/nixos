@@ -13,33 +13,68 @@
       ...
     }:
     {
-      # Enable X11
+
+      programs.kdeconnect = {
+        enable = true;
+        # package = pkgs.gnomeExtensions.gsconnect;
+      };
+
+      services.rustdesk-server = {
+        enable = true;
+        openFirewall = true;
+      };
+
+      # set local
+      services.xserver.xkb = {
+        layout = lib.mkForce "fr,us,ca,gb";
+        options = lib.mkForce "grp:win_shift_toggle,eurosign:e";
+      };
+
+      # Enable kde plasma login manager as display manager
+      services.displayManager.plasma-login-manager.enable = true;
+      services.displayManager.defaultSession = "plasma"; # Default to Plasma
+      services.xserver.wacom.enable = true; # wacom graphical tablet support
+
+      # Enable both X11 and Wayland sessions
       services.xserver.enable = true;
+      services.desktopManager.plasma6.enable = true; # Plasma 6
+      services.xserver.desktopManager.xfce.enable = true; # XFCE 
+      services.xserver.desktopManager.cinnamon.enable = true; # Cinnamon 
 
-      # XFCE desktop environment only
-      services.xserver.desktopManager.xfce.enable = true;
+      # Wayland compositors
+      programs.hyprland.enable = true;
+      programs.sway = {
+        enable = true;
+        wrapperFeatures.gtk = true;
+      };
 
-      # No display manager (SDDM not installed/enabled)
+      # GNOME (supports both X11 and Wayland)
+      # services.desktopManager.gnome.enable = true;
 
-      # Basic X11 packages for startx - using correct names
+      # Niri compositor (Wayland)
+      programs.niri = {
+        enable = true;
+        # package = pkgs.niri;
+      };
+
+      # Additional packages for Wine support
       environment.systemPackages = with pkgs; [
-        xinit # Provides startx command (was xorg.xinit)
-        xrandr # For display management (was xorg.xrandr)
-        xfce4-terminal # (was xfce.xfce4-terminal)
-        mousepad # Simple text editor (was xfce.mousepad)
-        thunar # File manager (was xfce.thunar)
-        networkmanagerapplet
-        pavucontrol # Audio control
+        xf86-input-wacom
+        kdePackages.wacomtablet
+        # Qt and GTK theming for better integration
+        qt5.qtbase
+        qt5.qttools
+        qt5.qtdeclarative
+        qt5.qtwayland
+
+        qt6.qtbase
+        qt6.qttools
+        qt6.qtdeclarative
+        qt6.qtwayland
+
+        glib-networking # GLib network extensions
+        gsettings-desktop-schemas
+        qt6.qtmultimedia
       ];
-
-      # Simple startx xinitrc
-      environment.etc."X11/xinit/xinitrc".text = ''
-        #!/bin/sh
-        # System-wide xinitrc - starts XFCE by default
-        exec startxfce4
-      '';
-
-      # Make sure the file is executable
-      environment.etc."X11/xinit/xinitrc".mode = "0755";
     };
 }

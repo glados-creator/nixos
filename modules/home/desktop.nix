@@ -90,9 +90,6 @@
         vulkan-loader
       ];
 
-      # SDDM configuration
-      services.displayManager.sddm.theme = "breeze-dark";
-
       programs.gamemode.enable = true;
 
       programs.gamescope = {
