@@ -79,10 +79,10 @@
           nixpkgs.config.allowUnfree = true;
 
           # make .config writable
-          home.file = {
-            ".config".source = "/home/glados/dotfiles/.config";
-            ".local".source = "/home/glados/dotfiles/.local";
-          };
+          # home.file = {
+          #   ".config".source = "/home/glados/dotfiles/.config";
+          #   ".local".source = "/home/glados/dotfiles/.local";
+          # }; # give up
 
           # Developer and desktop packages for Glados
           home.packages = with pkgs; [
