@@ -32,7 +32,7 @@
       services.xserver.enable = true;
       services.desktopManager.plasma6.enable = true; # Plasma 6
       services.xserver.desktopManager.xfce.enable = true; # XFCE
-      services.xserver.desktopManager.cinnamon.enable = true; # Cinnamon
+      # services.xserver.desktopManager.cinnamon.enable = true; # Cinnamon
 
       # Wayland compositors
       programs.hyprland.enable = true;
@@ -42,7 +42,7 @@
       };
 
       # GNOME (supports both X11 and Wayland)
-      # services.desktopManager.gnome.enable = true;
+      services.desktopManager.gnome.enable = true;
 
       # Niri compositor (Wayland)
       programs.niri = {
@@ -50,6 +50,15 @@
         # package = pkgs.niri;
       };
 
+      # AwesomeWM (X11)
+      services.xserver.windowManager.awesome = {
+        enable = true;
+        luaModules = with pkgs.luaPackages; [
+          luafilesystem
+          lgi
+        ];
+      };
+      
       # Additional packages for Wine support
       environment.systemPackages = with pkgs; [
         xf86-input-wacom
