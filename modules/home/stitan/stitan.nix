@@ -21,8 +21,6 @@
         chromium
         alacritty
         discord
-        localsend
-        rustdesk
 
         # Media / creative
         krita
@@ -52,6 +50,7 @@
       };
 
       # Now configure home-manager for user 'glados'
+      home-manager.backupFileExtension = "backup";
       home-manager.users.stitan =
         {
           config,
@@ -73,8 +72,6 @@
             chromium
             alacritty
             discord
-            localsend
-            rustdesk
 
             # Media / creative
             krita
@@ -92,7 +89,6 @@
           ];
 
           services.blueman-applet.enable = true;
-          # programs.mangohud.enable = true;
 
           programs.vscodium = {
             enable = true;

@@ -22,8 +22,6 @@
         alacritty
         android-studio
         discord
-        localsend
-        rustdesk
         distrobox
         distroshelf
 
@@ -63,6 +61,7 @@
       };
 
       # Now configure home-manager for user 'glados'
+      home-manager.backupFileExtension = "backup";
       home-manager.users.glados =
         {
           config,
@@ -78,12 +77,6 @@
           home.stateVersion = "26.05";
           nixpkgs.config.allowUnfree = true;
 
-          # make .config writable
-          # home.file = {
-          #   ".config".source = "/home/glados/dotfiles/.config";
-          #   ".local".source = "/home/glados/dotfiles/.local";
-          # }; # give up
-
           # Developer and desktop packages for Glados
           home.packages = with pkgs; [
             home-manager
@@ -92,8 +85,6 @@
             alacritty
             android-studio
             discord
-            localsend
-            rustdesk
             distrobox
             distroshelf
 

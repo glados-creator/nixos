@@ -13,19 +13,10 @@
       ...
     }:
     {
-      programs.kdeconnect = {
-        enable = true;
-        # package = pkgs.gnomeExtensions.gsconnect;
-      };
-
-      services.rustdesk-server = {
-        enable = true;
-        openFirewall = true;
-      };
-
-      # Enable kde plasma login manager as display manager
-      services.displayManager.plasma-login-manager.enable = true;
-      services.displayManager.defaultSession = "plasma"; # Default to Plasma
+      # Enable SDDM ~kde plasma login manager~ as display manager
+      services.displayManager.sddm.enable = true;
+      services.displayManager.plasma-login-manager.enable = false;
+      # services.displayManager.defaultSession = "plasma"; # Default to Plasma
       services.xserver.wacom.enable = true; # wacom graphical tablet support
 
       # Enable both X11 and Wayland sessions

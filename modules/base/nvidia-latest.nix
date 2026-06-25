@@ -25,7 +25,7 @@
       };
 
       hardware.nvidia = {
-        package = config.boot.kernelPackages.nvidiaPackages.stable; # pkgs.linuxPackages.nvidiaPackages.latest;
+        package = config.boot.kernelPackages.nvidiaPackages.latest; # pkgs.linuxPackages.nvidiaPackages.stable;
         powerManagement.enable = true;
         open = false;
         nvidiaSettings = true;

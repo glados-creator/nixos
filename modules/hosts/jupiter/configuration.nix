@@ -33,7 +33,7 @@
         self.nixosModules.k3sGpu
         self.nixosModules.ceph
         self.nixosModules.tailscale
-        self.nixosModules.sunshine
+        self.nixosModules.rdp
         self.nixosModules.VR
 
         self.nixosModules.jupiterCeph
@@ -46,11 +46,15 @@
         interfaces.enp5s0.useDHCP = true;
         interfaces.enp5s0.wakeOnLan.enable = true;
         defaultGateway = "192.168.1.254";
+        networkmanager = {
+          enable = true;
+          insertNameservers = [ "192.168.1.1" ];
+          appendNameservers = [ "192.168.1.254" ];
+        };
         nameservers = [
-          "192.168.1.1"
+          # "192.168.1.1"
           "1.1.1.1"
-          "8.8.8.8"
-          "192.168.1.254" # router
+          # "192.168.1.254" # router
         ];
       };
 

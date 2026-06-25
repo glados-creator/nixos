@@ -13,18 +13,9 @@
       ...
     }:
     {
-      programs.kdeconnect = {
-        enable = true;
-        # package = pkgs.gnomeExtensions.gsconnect;
-      };
-
-      services.rustdesk-server = {
-        enable = true;
-        openFirewall = true;
-      };
-
-      # Enable kde plasma login manager as display manager
-      services.displayManager.plasma-login-manager.enable = true;
+      # Enable SDDM ~kde plasma login manager~ as display manager
+      services.displayManager.sddm.enable = true;
+      # services.displayManager.plasma-login-manager.enable = true;
       services.displayManager.defaultSession = "plasma"; # Default to Plasma
       services.xserver.wacom.enable = true; # wacom graphical tablet support
 
@@ -58,7 +49,7 @@
           lgi
         ];
       };
-      
+
       # Additional packages for Wine support
       environment.systemPackages = with pkgs; [
         xf86-input-wacom
