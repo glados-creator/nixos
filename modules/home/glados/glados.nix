@@ -22,6 +22,11 @@
         alacritty
         android-studio
         discord
+
+        # prog
+        arduino
+        arduino-cli
+        arduino-ide
         distrobox
         distroshelf
 
