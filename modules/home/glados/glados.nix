@@ -16,14 +16,20 @@
       # Import the Home Manager module from your flake input
       imports = [ inputs.home-manager.nixosModules.home-manager ];
 
+      nixpkgs.config.android_sdk.accept_license = true;
+
       environment.systemPackages = with pkgs; [
         firefox
         chromium
         alacritty
-        android-studio
         discord
 
         # prog
+        # androidsdk
+        android-studio-full
+        # android-studio-tools
+        # android-studio
+        android-tools
         arduino
         arduino-cli
         arduino-ide
@@ -83,13 +89,24 @@
           nixpkgs.config.allowUnfree = true;
 
           # Developer and desktop packages for Glados
+          nixpkgs.config.android_sdk.accept_license = true;
+
           home.packages = with pkgs; [
             home-manager
             firefox
             chromium
             alacritty
-            android-studio
             discord
+
+            # prog
+            # androidsdk
+            android-studio-full
+            # android-studio-tools
+            # android-studio
+            android-tools
+            arduino
+            arduino-cli
+            arduino-ide
             distrobox
             distroshelf
 

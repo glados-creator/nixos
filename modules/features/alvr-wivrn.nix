@@ -28,6 +28,8 @@
       # ---------------------------
       # System packages
       # ---------------------------
+      nixpkgs.config.android_sdk.accept_license = true;
+
       environment.systemPackages = with pkgs; [
         # VR streaming & runtimes
         alvr
@@ -46,6 +48,45 @@
         unzip
         x264
         ffmpeg
+
+        # alvr build tools
+        # androidsdk
+        # android-studio-full
+        # android-studio-tools
+        # android-studio
+        android-tools
+
+        # android-tools
+        brotli
+        bzip2
+        celt
+        # ffmpeg-alvr
+        gmp
+        jack2
+        lame
+        libx11
+        libxcursor
+        libxi
+        libxrandr
+        # libdrm
+        libglvnd
+        libogg
+        libpng
+        libtheora
+        libunwind
+        # libva
+        libvdpau
+        # libxkbcommon
+        openapv
+        openssl
+        openvr
+        pipewire
+        soxr
+        # vulkan-headers
+        # vulkan-loader
+        wayland
+        # x264
+        xvidcore
       ];
 
       # ---------------------------

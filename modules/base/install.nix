@@ -191,6 +191,7 @@
         qemu_kvm
         htop
         btop
+        iotop
         lm_sensors
         pciutils
         usbutils

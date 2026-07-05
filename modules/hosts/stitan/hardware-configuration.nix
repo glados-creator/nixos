@@ -15,18 +15,19 @@
       modulesPath,
       ...
     }:
+
     {
       imports = [
-        (modulesPath + "/installer/scan/not-detected.nix")
+        (modulesPath + "/profiles/qemu-guest.nix")
       ];
 
       boot.initrd.availableKernelModules = [
-        "xhci_pci"
+        "uhci_hcd"
         "ehci_pci"
         "ahci"
-        "usbhid"
-        "usb_storage"
-        "sd_mod"
+        "virtio_pci"
+        "sr_mod"
+        "virtio_blk"
       ];
       boot.initrd.kernelModules = [ "dm-snapshot" ];
       boot.kernelModules = [ "kvm-intel" ];
@@ -36,15 +37,15 @@
       ];
       boot.extraModulePackages = [ ];
 
+
       fileSystems."/boot" = {
-        device = "/dev/disk/by-uuid/D284-08FE";
+        device = "/dev/disk/by-uuid/2E91-457C";
         fsType = "vfat";
         options = [
           "fmask=0022"
           "dmask=0022"
         ];
       };
-
       fileSystems."/" = {
         device = "/dev/vgstitan/rootfs";
         fsType = "ext4";
@@ -52,11 +53,6 @@
 
       fileSystems."/home" = {
         device = "/dev/vgstitan/homefs";
-        fsType = "ext4";
-      };
-
-      fileSystems."/vm" = {
-        device = "/dev/vgstitan/vmfs";
         fsType = "ext4";
       };
 
