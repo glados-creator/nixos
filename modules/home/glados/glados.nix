@@ -35,6 +35,7 @@
         arduino-ide
         distrobox
         distroshelf
+        wireshark
 
         # Gaming / Windows compatibility
         steam
@@ -109,6 +110,7 @@
             arduino-ide
             distrobox
             distroshelf
+            wireshark
 
             # Gaming / Windows compatibility
             steam
