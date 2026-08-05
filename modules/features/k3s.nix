@@ -22,6 +22,7 @@
       environment.systemPackages = with pkgs; [
         k3s
         etcd
+        multus-cni
       ];
 
       # Essential firewall configuration for cluster communication
@@ -61,6 +62,54 @@
         "D! /var/lib/rancher/k3s/storage 0755 root root -"
         "D! /var/lib/rancher/k3s/agent/ 0755 root root -"
       ];
+
+      boot.kernel.sysctl = {
+        # Increase the system-wide limit for inotify watches
+        "fs.inotify.max_user_watches" = 524288;
+        # Increase the system-wide limit for open file descriptors
+        "fs.file-max" = 65535;
+      };
+
+      environment.etc."cni/net.d/00-multus.conf" = {
+        text = ''
+          {
+            "capabilities": {
+              "portMappings": true
+            },
+            "cniVersion": "0.3.1",
+            "logLevel": "verbose",
+            "logToStderr": true,
+            "name": "multus-cni-network",
+            "clusterNetwork": "/host/etc/cni/net.d/10-calico.conflist",
+            "type": "multus-shim"
+          }
+        '';
+      };
+
+      environment.etc."rancher/k3s/registries.yaml" = {
+        text = ''
+          mirrors:
+            docker.io:
+              endpoint:
+                - "http://harbor.main.home/dockerhub"
+            ghcr.io:
+              endpoint:
+                - "http://harbor.main.home/ghcr"
+            quay.io:
+              endpoint:
+                - "http://harbor.main.home/quay"
+            lscr.io:
+              endpoint:
+                - "http://harbor.main.home/lscr"
+          configs:
+            "harbor.main.home":
+              auth:
+                username: glados
+                password: PortalChell
+              tls:
+                insecure_skip_verify: true
+        '';
+      };
 
     };
 }

@@ -34,7 +34,7 @@
       # clean /tmp
       boot.tmp.cleanOnBoot = true;
       # network
-      systemd.services.NetworkManager-wait-online.enable = false; # disables the 1 minute delay
+      # systemd.services.NetworkManager-wait-online.enable = false; # disables the 1 minute delay
       networking = {
         # networkmanager.enable = true;
         firewall.enable = true;
@@ -84,15 +84,16 @@
         HandlePowerKey = "hibernate";
       };
 
-      xdg = {
-        portal = {
-          enable = true;
-          xdgOpenUsePortal = true;
-
-          extraPortals = with pkgs; [
-            kdePackages.xdg-desktop-portal-kde
-            xdg-desktop-portal-gtk
-          ];
+      xdg.portal = {
+        enable = true;
+        xdgOpenUsePortal = true;
+        extraPortals = with pkgs; [
+          kdePackages.xdg-desktop-portal-kde
+          xdg-desktop-portal-gtk
+        ];
+        config = {
+          common.default = "*";
+          plasma.default = [ "kde" "gtk" ];   # prefer KDE portal for Plasma
         };
       };
 
@@ -178,6 +179,7 @@
 
       environment.systemPackages = with pkgs; [
         libwacom
+        mesa
         mesa-demos
         vulkan-tools
 

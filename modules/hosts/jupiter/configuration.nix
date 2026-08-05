@@ -94,6 +94,7 @@
           "video"
           "input"
           "render"
+          "pipewire"
           # "networkmanager"
           "systemd-journal"
           "docker"
