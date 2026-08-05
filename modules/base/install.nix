@@ -36,9 +36,9 @@
       # network
       systemd.services.NetworkManager-wait-online.enable = false; # disables the 1 minute delay
       networking = {
-        networkmanager.enable = true;
+        # networkmanager.enable = true;
         firewall.enable = true;
-        dhcpcd.enable = false; # not needed with NetworkManager
+        # dhcpcd.enable = false; # not needed with NetworkManager
       };
       networking.nftables.enable = true;
 
