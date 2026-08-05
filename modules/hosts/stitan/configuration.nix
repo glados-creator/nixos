@@ -82,6 +82,7 @@
         name = "stitan";
         shell = pkgs.fish;
         isNormalUser = true;
+        createHome = true;
         extraGroups = [
           "wheel"
           "audio"

@@ -44,19 +44,19 @@
           clusterNetwork = "192.168.1.0/24";
         };
         mon = {
-          enable = true;
+          enable = false;
           daemons = [
             "stitan"
           ];
         };
         mgr = {
-          enable = true;
+          enable = false;
           daemons = [
             "stitan"
           ];
         };
         mds = {
-          enable = true;
+          enable = false;
           daemons = [
             "stitan"
           ];

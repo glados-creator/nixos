@@ -89,6 +89,7 @@
         shell = pkgs.fish;
         name = "glados";
         isNormalUser = true;
+        createHome = true;
         extraGroups = [
           "wheel"
           "audio"
