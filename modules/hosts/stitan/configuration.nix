@@ -82,12 +82,14 @@
         name = "stitan";
         shell = pkgs.fish;
         isNormalUser = true;
+        createHome = true;
         extraGroups = [
           "wheel"
           "audio"
           "video"
           "input"
           "render"
+          "pipewire"
           # "networkmanager"
           "systemd-journal"
           "docker"

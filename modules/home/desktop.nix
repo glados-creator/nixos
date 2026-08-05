@@ -13,10 +13,17 @@
       ...
     }:
     {
+      security.pam.loginLimits = [
+        { domain = "@sddm"; type = "soft"; item = "rtprio"; value = "20"; }
+        { domain = "@sddm"; type = "soft"; item = "nice"; value = "-20"; }
+        { domain = "@pipewire"; type = "soft"; item = "rtprio"; value = "20"; }
+        { domain = "@pipewire"; type = "soft"; item = "nice";   value = "-20"; }
+      ];
+
       # Enable SDDM ~kde plasma login manager~ as display manager
       services.displayManager.sddm.enable = true;
       services.displayManager.plasma-login-manager.enable = false;
-      # services.displayManager.defaultSession = "plasma"; # Default to Plasma
+      services.displayManager.defaultSession = lib.mkForce "plasma"; # Default to Plasma
       services.xserver.wacom.enable = true; # wacom graphical tablet support
 
       # Enable both X11 and Wayland sessions
