@@ -37,7 +37,6 @@
       ];
       boot.extraModulePackages = [ ];
 
-
       fileSystems."/boot" = {
         device = "/dev/disk/by-uuid/2E91-457C";
         fsType = "vfat";

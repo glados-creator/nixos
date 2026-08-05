@@ -106,7 +106,7 @@
       #     qt5.qttools
       #     qt5.qtdeclarative
       #     qt5.qtwayland
-      #   
+      #
       #     qt6.qtbase
       #     qt6.qttools
       #     qt6.qtdeclarative
