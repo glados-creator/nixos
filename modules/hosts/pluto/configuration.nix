@@ -38,13 +38,13 @@
 
       networking = {
         hostName = "pluto";
-        interfaces.enp5s0.useDHCP = true;
+        interfaces.enp5s0.useDHCP = true; # TODO : change interface name to real
         interfaces.enp5s0.wakeOnLan.enable = true;
-        defaultGateway = "192.168.1.254";
+        # defaultGateway = "192.168.1.254";
         networkmanager = {
           enable = true;
-          insertNameservers = [ "192.168.1.1" ];
-          appendNameservers = [ "192.168.1.254" ];
+          #   insertNameservers = [ "192.168.1.1" ];
+          #   appendNameservers = [ "192.168.1.254" ];
         };
         nameservers = [
           # "192.168.1.1"
@@ -69,7 +69,7 @@
           "video"
           "input"
           "render"
-          "networkmanager"
+          # "networkmanager"
           "systemd-journal"
           "docker"
           "kvm"

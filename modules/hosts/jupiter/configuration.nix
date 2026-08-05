@@ -42,19 +42,39 @@
 
       networking = {
         hostName = "jupiter";
-        interfaces.enp5s0.useDHCP = true;
-        interfaces.enp5s0.wakeOnLan.enable = true;
-        defaultGateway = "192.168.1.254";
-        networkmanager = {
-          enable = true;
-          insertNameservers = [ "192.168.1.1" ];
-          appendNameservers = [ "192.168.1.254" ];
+        interfaces.enp5s0 = {
+          useDHCP = false;
+          wakeOnLan.enable = true;
+          ipv4.addresses = [
+            {
+              address = "192.168.1.16";
+              prefixLength = 24;
+            }
+            {
+              address = "172.16.0.16";
+              prefixLength = 24;
+            }
+          ];
+          # ipv4.routes = [
+          #   {
+          #     address = "0.0.0.0";
+          #     prefixLength = 0;
+          #     via = "172.16.0.1";
+          #     metric = 200;
+          #   }
+          # ];
         };
+        defaultGateway = "192.168.1.254";
+
         nameservers = [
-          # "192.168.1.1"
+          # "172.16.0.3"
+          # "192.168.0.3"
           "1.1.1.1"
-          # "192.168.1.254" # router
+          "192.168.1.254"
         ];
+
+        # Turn off NetworkManager – it would fight with manual config
+        networkmanager.enable = false;
       };
 
       services.logind.settings.Login = {
@@ -73,7 +93,7 @@
           "video"
           "input"
           "render"
-          "networkmanager"
+          # "networkmanager"
           "systemd-journal"
           "docker"
           "kvm"
