@@ -33,7 +33,6 @@
 
         self.nixosModules.k3s
         self.nixosModules.k3sGpu
-        self.nixosModules.ceph
         self.nixosModules.tailscale
         self.nixosModules.rdp
         self.nixosModules.VR
