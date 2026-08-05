@@ -44,10 +44,9 @@
         serverAddr = "https://${controlPlaneIP}:6443";
         token = clusterToken;
         nodeName = config.networking.hostName;
-        extraFlags = [
-          "--with-node-id"
-          "--node-label=agent=true"
-        ];
+        # extraFlags = [
+        #   "--node-label=agent=true"
+        # ];
       };
 
       systemd.tmpfiles.rules = [

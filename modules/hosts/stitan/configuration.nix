@@ -57,7 +57,7 @@
       };
 
       boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_18;
-      services.qemuGuest.enable = true;
+      # services.qemuGuest.enable = true;
 
       users.users.stitan = {
         name = "stitan";
@@ -74,6 +74,7 @@
           "docker"
           "kvm"
           "libvirtd"
+          "ceph"
         ];
       };
     };

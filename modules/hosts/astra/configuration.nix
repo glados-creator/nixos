@@ -81,6 +81,7 @@
           "docker"
           "kvm"
           "libvirtd"
+          "ceph"
         ];
       };
     };

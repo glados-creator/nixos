@@ -37,9 +37,9 @@
       services.ceph = {
         enable = true;
         global = {
-          fsid = "25c7a498-9c9e-4572-bb73-12425e93ada1";
-          monHost = "192.168.1.12,192.168.1.16,192.168.1.22";
-          monInitialMembers = "astra,jupiter,stitan";
+          fsid = (builtins.readFile ./cephfsid.crt);
+          monHost = "192.168.1.14,192.168.1.12,192.168.1.16";
+          monInitialMembers = "stitan";
           publicNetwork = "192.168.1.0/24";
           clusterNetwork = "192.168.1.0/24";
         };
