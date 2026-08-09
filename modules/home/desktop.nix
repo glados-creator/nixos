@@ -28,6 +28,10 @@
 
       # Enable both X11 and Wayland sessions
       services.xserver.enable = true;
+      # services.xserver.fontPath = "/run/current-system/sw/share/X11/fonts";
+      # services.xserver.extraConfig = ''
+      #   ModulePath "/run/current-system/sw/lib/xorg/modules"
+      # '';
       services.desktopManager.plasma6.enable = true; # Plasma 6
       services.xserver.desktopManager.xfce.enable = true; # XFCE
       # services.xserver.desktopManager.cinnamon.enable = true; # Cinnamon

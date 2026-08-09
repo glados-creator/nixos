@@ -14,7 +14,7 @@
     }:
     let
       # Your cluster's control plane address
-      controlPlaneIP = "192.168.1.24";
+      controlPlaneIP = "192.168.1.14";
       # Your actual server token (from /var/lib/rancher/k3s/server/token on the server)
       clusterToken = (builtins.readFile ./k3s_token.crt);
     in
@@ -23,6 +23,7 @@
         k3s
         etcd
         multus-cni
+        linkerd
       ];
 
       # Essential firewall configuration for cluster communication
@@ -45,23 +46,32 @@
         serverAddr = "https://${controlPlaneIP}:6443";
         token = clusterToken;
         nodeName = config.networking.hostName;
-        # extraFlags = [
-        #   "--node-label=agent=true"
-        # ];
+        extraFlags = [
+          # "--cluster-init"
+          "--disable=traefik"
+          "--disable=helm-controller"
+          "--flannel-backend=none"
+          "--disable-network-policy"
+          "--disable=servicelb"
+          "--disable=metrics-server"
+          "--kubelet-arg=--fail-swap-on=false"
+          # "--node-label=server=true"
+          "--node-label=agent=true"
+        ];
       };
 
-      systemd.tmpfiles.rules = [
-        # DELETE Volatile State (Run on every boot)
-        # "D! /etc/rancher/k3s 0755 root root -"
-        # "D! /etc/rancher/node 0755 root root -"
-        "D! /var/lib/kubelet 0755 root root -"
-        "D! /var/lib/longhorn 0755 root root -"
-        "D! /var/lib/etcd 0755 root root -"
-        "D! /var/lib/cni 0755 root root -"
-        "D! /var/lib/rancher/k3s/data 0755 root root -"
-        "D! /var/lib/rancher/k3s/storage 0755 root root -"
-        "D! /var/lib/rancher/k3s/agent/ 0755 root root -"
-      ];
+      # systemd.tmpfiles.rules = [
+      #   # DELETE Volatile State (Run on every boot)
+      #   # "D! /etc/rancher/k3s 0755 root root -"
+      #   # "D! /etc/rancher/node 0755 root root -"
+      #   # "D! /var/lib/kubelet 0755 root root -"
+      #   # "D! /var/lib/longhorn 0755 root root -"
+      #   # "D! /var/lib/etcd 0755 root root -"
+      #   # "D! /var/lib/cni 0755 root root -"
+      #   # "D! /var/lib/rancher/k3s/data 0755 root root -"
+      #   # "D! /var/lib/rancher/k3s/storage 0755 root root -"
+      #   # "D! /var/lib/rancher/k3s/agent/ 0755 root root -"
+      # ];
 
       boot.kernel.sysctl = {
         # Increase the system-wide limit for inotify watches
@@ -70,28 +80,28 @@
         "fs.file-max" = 65535;
       };
 
-      environment.etc."cni/net.d/00-multus.conf" = {
-        text = ''
-          {
-            "capabilities": {
-              "portMappings": true
-            },
-            "cniVersion": "0.3.1",
-            "logLevel": "verbose",
-            "logToStderr": true,
-            "name": "multus-cni-network",
-            "clusterNetwork": "/host/etc/cni/net.d/10-calico.conflist",
-            "type": "multus-shim"
-          }
-        '';
-      };
+      # environment.etc."cni/net.d/00-multus.conf" = {
+      #   text = ''
+      #     {
+      #       "capabilities": {
+      #         "portMappings": true
+      #       },
+      #       "cniVersion": "0.3.1",
+      #       "logLevel": "verbose",
+      #       "logToStderr": true,
+      #       "name": "multus-cni-network",
+      #       "clusterNetwork": "/host/etc/cni/net.d/10-calico.conflist",
+      #       "type": "multus-shim"
+      #     }
+      #   '';
+      # };
 
       environment.etc."rancher/k3s/registries.yaml" = {
         text = ''
           mirrors:
             docker.io:
               endpoint:
-                - "http://harbor.main.home/dockerhub"
+                - "http://harbor.main.home/docker"
             ghcr.io:
               endpoint:
                 - "http://harbor.main.home/ghcr"
@@ -105,7 +115,7 @@
             "harbor.main.home":
               auth:
                 username: <username>
-                password: <password>
+                password: <Password>
               tls:
                 insecure_skip_verify: true
         '';

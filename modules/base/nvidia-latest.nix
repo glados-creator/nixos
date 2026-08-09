@@ -35,6 +35,7 @@
       environment.systemPackages = with pkgs; [
         nvtopPackages.nvidia
         nvitop
+        btop-cuda
         nvidia-container-toolkit
         opencl-caps-viewer
         libva-vdpau-driver
@@ -44,6 +45,13 @@
         libva-utils
         vdpauinfo
         mesa-demos
+
+        # x11
+        xinit
+        xf86-video-fbdev
+        xf86-video-nv
+        xf86-video-vesa
+        xf86-video-nested
       ];
       hardware.nvidia-container-toolkit.enable = true;
       hardware.nvidia-container-toolkit.mount-nvidia-executables = true;

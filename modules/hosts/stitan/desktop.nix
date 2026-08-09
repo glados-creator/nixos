@@ -13,6 +13,7 @@
       ...
     }:
     {
+      # PAM limits
       security.pam.loginLimits = [
         { domain = "@sddm"; type = "soft"; item = "rtprio"; value = "20"; }
         { domain = "@sddm"; type = "soft"; item = "nice"; value = "-20"; }
@@ -20,14 +21,28 @@
         { domain = "@pipewire"; type = "soft"; item = "nice";   value = "-20"; }
       ];
 
-      # Enable SDDM ~kde plasma login manager~ as display manager
-      services.displayManager.sddm.enable = true;
-      services.displayManager.plasma-login-manager.enable = false;
+      # # Enable SDDM ~kde plasma login manager~ as display manager
+      # services.displayManager.sddm.enable = true;
+      # Use ly as the display manager
+      services.displayManager.ly.enable = true;
+      # services.displayManager.plasma-login-manager.enable = false;
+
       services.displayManager.defaultSession = lib.mkForce "plasma"; # Default to Plasma
       services.xserver.wacom.enable = true; # wacom graphical tablet support
 
-      # Enable both X11 and Wayland sessions
+      # X11 and desktop environments – all support X11
       services.xserver.enable = true;
+      # services.xserver.fontPath = "/run/current-system/sw/share/X11/fonts";
+      # services.xserver.logFile = "/tmp/Xorg.0.log";
+      services.xserver.modules = with pkgs; [ 
+              # x11
+        xinit
+        xf86-video-fbdev
+        xf86-video-nv
+        xf86-video-vesa
+        xf86-video-nested
+        xf86-input-libinput
+      ];
       services.desktopManager.plasma6.enable = true; # Plasma 6
       services.xserver.desktopManager.xfce.enable = true; # XFCE
       # services.xserver.desktopManager.cinnamon.enable = true; # Cinnamon

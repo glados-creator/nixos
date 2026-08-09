@@ -15,7 +15,8 @@
     {
       nixpkgs.config.allowBroken = true; # allow broken packages
       nixpkgs.config.nvidia.acceptLicense = true;
-      services.xserver.videoDrivers = [ "nvidia" ];
+      services.xserver.videoDrivers = [ "nvidia" "modesetting" "fbdev" ];
+      # services.xserver.videoDrivers = [ "modesetting" ];
 
       hardware.graphics = {
         enable = true;
@@ -34,9 +35,12 @@
         modesetting.enable = true;
       };
 
+      boot.kernelParams = [ "nvidia-drm.fbdev=1" ];
+
       environment.systemPackages = with pkgs; [
         nvtopPackages.nvidia
         nvitop
+        btop-cuda
         nvidia-container-toolkit
         opencl-caps-viewer
         libva-vdpau-driver
@@ -46,6 +50,14 @@
         libva-utils
         vdpauinfo
         mesa-demos
+
+        # x11
+        xinit
+        xf86-video-fbdev
+        xf86-video-nv
+        xf86-video-vesa
+        xf86-video-nested
+        xf86-input-libinput
       ];
       hardware.nvidia-container-toolkit.enable = true;
       hardware.nvidia-container-toolkit.mount-nvidia-executables = true;
