@@ -57,6 +57,8 @@
       services.udev.packages = with pkgs; [ usb-modeswitch ];
       services.blueman.enable = true;
 
+      services.libinput.enable = true;
+
       services.udev.extraRules = ''
         # Run usb-modeswitch when your specific device is detected
         ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="${lib.getExe pkgs.usb-modeswitch} -K -v 0bda -p 1a2b"
@@ -93,7 +95,10 @@
         ];
         config = {
           common.default = "*";
-          plasma.default = [ "kde" "gtk" ];   # prefer KDE portal for Plasma
+          plasma.default = [
+            "kde"
+            "gtk"
+          ]; # prefer KDE portal for Plasma
         };
       };
 

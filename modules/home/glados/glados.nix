@@ -87,6 +87,7 @@
           home.username = "glados";
           home.homeDirectory = "/home/glados";
           home.stateVersion = "26.05";
+          home.enableNixpkgsReleaseCheck = false;
           nixpkgs.config.allowUnfree = true;
 
           # Developer and desktop packages for Glados

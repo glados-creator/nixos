@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.nixosModules.k3s =
+  flake.nixosModules.k3sserver =
     {
       config,
       pkgs,
@@ -16,7 +16,7 @@
       # Your cluster's control plane address
       controlPlaneIP = "192.168.1.14";
       # Your actual server token (from /var/lib/rancher/k3s/server/token on the server)
-      clusterToken = (builtins.readFile ./k3s_token.crt);
+      # clusterToken = (builtins.readFile ./k3s_token.crt);
     in
     {
       environment.systemPackages = with pkgs; [
@@ -42,12 +42,12 @@
 
       services.k3s = {
         enable = true;
-        role = "agent";
-        serverAddr = "https://${controlPlaneIP}:6443";
-        token = clusterToken;
+        role = "server";
+        # serverAddr = "https://${controlPlaneIP}:6443";
+        # token = clusterToken;
         nodeName = config.networking.hostName;
         extraFlags = [
-          # "--cluster-init"
+          "--cluster-init"
           "--disable=traefik"
           "--disable=helm-controller"
           "--flannel-backend=none"
@@ -55,8 +55,8 @@
           "--disable=servicelb"
           "--disable=metrics-server"
           "--kubelet-arg=--fail-swap-on=false"
-          # "--node-label=server=true"
-          "--node-label=agent=true"
+          "--node-label=server=true"
+          # "--node-label=agent=true"
         ];
       };
 

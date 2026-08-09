@@ -63,6 +63,7 @@
           home.username = "stitan";
           home.homeDirectory = "/home/stitan";
           home.stateVersion = "26.05";
+          home.enableNixpkgsReleaseCheck = false;
           nixpkgs.config.allowUnfree = true;
 
           # Developer and desktop packages for saturn's titan
