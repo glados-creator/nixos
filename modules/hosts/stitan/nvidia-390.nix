@@ -40,6 +40,7 @@
       environment.systemPackages = with pkgs; [
         nvtopPackages.nvidia
         nvitop
+        btop-cuda
         nvidia-container-toolkit
         opencl-caps-viewer
         libva-vdpau-driver
