@@ -34,7 +34,7 @@
         self.nixosModules.tailscale
         self.nixosModules.rdp
 
-        self.nixosModules.jupiterCeph
+        self.nixosModules.stitanCeph
         self.nixosModules.stitanDesktop
         self.nixosModules.stitanHome
       ];
@@ -66,8 +66,8 @@
         defaultGateway = "192.168.1.254";
 
         nameservers = [
-          # "172.16.0.3"
-          # "192.168.0.3"
+          "172.16.0.3"
+          "192.168.0.3"
           "1.1.1.1"
           "192.168.1.254"
         ];
