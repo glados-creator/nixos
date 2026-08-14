@@ -16,6 +16,9 @@
     {
       environment.systemPackages = with pkgs; [
         ceph
+        ceph-csi
+        libceph
+        ceph-client
       ];
 
       networking.firewall = {
@@ -62,14 +65,14 @@
             "stitan"
           ];
         };
-        # osd = {
-        #   enable = true;
-        #   daemons = [
-        #     "0" # sda 500G
-        #     "1" # sdc 500G
-        #     "2" # sdd 500G
-        #   ];
-        # };
+        osd = {
+          enable = true;
+          daemons = [
+            "5" # sda 500G
+            "6" # sdc 500G
+            "7" # sdd 500G
+          ];
+        };
       };
     };
 }
