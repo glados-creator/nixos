@@ -53,9 +53,14 @@ sudo -u ceph ceph-mgr -i $(hostname)
 
 
 # ADD OSD
-sudo ceph-volume lvm prepare --data /dev/sdb
+wipefs -a /dev/sdb
+sudo ceph-volume lvm prepare --data /dev/sdb --no-systemd
 sudo ceph-volume lvm activate --all
+ceph osd tree
 
+# DESTROY OSD
+ceph osd purge 0 --yes-i-really-mean-it
+ceph-volume lvm zap /dev/sdb --destroy
 
 ### ALTERNATIVE
 
@@ -74,3 +79,9 @@ sudo cephadm bootstrap --mon-ip <stivan_IP>
 
 sudo ceph mgr module enable dashboard
 sudo ceph dashboard set-login-credentials admin -i (file with password)
+
+# CRUSH RULES AUTOBALANCER
+ceph balancer on
+ceph balancer mode upmap
+
+ceph fs flag set enable_multiple true --yes-i-really-mean-it

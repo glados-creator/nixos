@@ -81,15 +81,15 @@
             "stitan"
           ];
         };
-        # osd = {
-        #     enable = true;
-        #     daemons = [
-        #         "3" # sda 2T
-        #         "4" # sdb 1T
-        #         "5" # sdc 2T
-        #         "6" # sdd 2T
-        #     ];
-        # };
+        osd = {
+            enable = true;
+            daemons = [
+                "1" # sda 2T
+                "2" # sdb 1T
+                "3" # sdc 2T
+                "4" # sdd 2T
+            ];
+        };
       };
     };
 }

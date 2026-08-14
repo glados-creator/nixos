@@ -44,29 +44,29 @@
           clusterNetwork = "192.168.1.0/24";
         };
         mon = {
-          enable = false;
+          enable = true;
           daemons = [
             "stitan"
           ];
         };
         mgr = {
-          enable = false;
+          enable = true;
           daemons = [
             "stitan"
           ];
         };
         mds = {
-          enable = false;
+          enable = true;
           daemons = [
             "stitan"
           ];
         };
-        # osd = {
-        #     enable = true;
-        #     daemons = [
-        #         "7" # 8 TB /dev/sda
-        #     ];
-        # };
+        osd = {
+            enable = true;
+            daemons = [
+                "0" # 8 TB /dev/sdb
+            ];
+        };
       };
     };
 }
