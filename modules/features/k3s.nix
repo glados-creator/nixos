@@ -108,6 +108,9 @@
             quay.io:
               endpoint:
                 - "http://harbor.main.home/quay"
+            codeberg.org:
+              endpoint:
+                - "http://harbor.main.home/codeberg"
             lscr.io:
               endpoint:
                 - "http://harbor.main.home/lscr"

@@ -16,6 +16,9 @@
     {
       environment.systemPackages = with pkgs; [
         ceph
+        ceph-csi
+        libceph
+        ceph-client
       ];
 
       networking.firewall = {

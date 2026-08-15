@@ -62,6 +62,14 @@ ceph osd tree
 ceph osd purge 0 --yes-i-really-mean-it
 ceph-volume lvm zap /dev/sdb --destroy
 
+# DESTROY POOL
+ceph osd pool rm <pool> --yes-i-really-mean-it
+
+# DESTROY CEPHFS
+ceph config set mon mon_allow_pool_delete true
+ceph fs volume ls
+ceph fs volume rm <cephfs> --yes-i-really-mean-it
+
 ### ALTERNATIVE
 
 ceph mgr module ls
@@ -78,10 +86,81 @@ sudo ceph mgr module enable stats
 sudo cephadm bootstrap --mon-ip <stivan_IP>
 
 sudo ceph mgr module enable dashboard
-sudo ceph dashboard set-login-credentials admin -i (file with password)
+ceph dashboard create-self-signed-cert
+ceph dashboard ac-user-create <username> -i <file-containing-password> administrator
+
+ceph config set mgr mgr/dashboard/server_addr $IP
+ceph config set mgr mgr/dashboard/server_port $PORT
 
 # CRUSH RULES AUTOBALANCER
 ceph balancer on
 ceph balancer mode upmap
 
+# allow multiple cephfs ?
 ceph fs flag set enable_multiple true --yes-i-really-mean-it
+
+# maintenance
+
+# pools 
+ceph osd pool ls detail          # every pool: size, min_size, pg_num, crush_rule, autoscale mode, etc.
+ceph osd lspools                 # just names + IDs
+ceph osd pool autoscale-status   # what the autoscaler is doing/proposing per pool
+# osd
+ceph osd tree                    # what you've been using — weight = capacity in TiB
+ceph osd df                      # per-OSD: weight, used%, actual usage, PG count — better for spotting imbalance
+ceph osd df tree                 # same but grouped by host, easiest to eyeball
+# crush 
+ceph osd crush rule ls            # list rule names
+ceph osd crush rule dump          # full detail (failure domain, device class filter, steps)
+ceph osd crush rule dump replicated_rule   # just the default one
+ceph osd crush tree               # bucket hierarchy (root → host → osd), similar to osd tree but pure CRUSH view
+
+ceph osd pool autoscale-status
+
+# CREATE MDS
+mkdir -p /var/lib/ceph/mds/ceph-stitan
+ceph auth get-or-create mds.stitan mon 'allow profile mds' mgr 'allow profile mds' mds 'allow *' osd 'allow *' \
+  -o /var/lib/ceph/mds/ceph-stitan/keyring
+chown -R ceph:ceph /var/lib/ceph/mds/ceph-stitan
+chmod 600 /var/lib/ceph/mds/ceph-stitan/keyring
+
+# CREATE cephfs
+
+# bhole - general backups
+ceph osd pool create bhole_meta
+ceph osd pool create bhole_data
+ceph osd pool set bhole_data bulk true
+ceph fs new bhole bhole_meta bhole_data
+
+# subvolumes
+ceph fs subvolumegroup create <vol_name> <group_name> [--size <size_in_bytes>]
+ceph fs subvolumegroup create bhole k8s-colosseum 
+ceph fs subvolume create bhole vicus-default k8s-colosseum
+ceph fs subvolume create bhole vicus-dmz k8s-colosseum
+ceph fs subvolume create bhole vicus-private k8s-colosseum
+ceph fs subvolume create bhole vicus-public k8s-colosseum
+
+ceph fs subvolume create bhole lilnas
+
+ceph fs subvolume ls bhole --group-name k8s-colosseum
+
+
+
+fileSystems."/mnt/bhole" = {
+  device = "192.168.1.14:6789:/";
+  fsType = "ceph";
+  options = [
+    "name=bhole"
+    "secretfile=/etc/ceph/bhole.secret"
+    "fs=bhole"
+    "_netdev"
+    "noatime"
+  ];
+};
+
+ceph auth get-or-create client.bhole mon 'allow rw fsname=bhole' mds 'allow rw fsname=bhole' osd 'allow rw tag cephfs data=bhole' mgr 'allow rw'
+
+ceph auth print-key client.bhole > /etc/ceph/bhole.secret
+
+mkdir -p /mnt/bhole
+mount -t ceph 192.168.1.14:6789:/ /mnt/bhole -o name=bhole,secretfile=/etc/ceph/bhole.secret,fs=bhole
