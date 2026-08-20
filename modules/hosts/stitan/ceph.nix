@@ -65,10 +65,10 @@
           ];
         };
         osd = {
-            enable = true;
-            daemons = [
-                "0" # 8 TB /dev/sdb
-            ];
+          enable = true;
+          daemons = [
+            "0" # 8 TB /dev/sdb
+          ];
         };
       };
     };

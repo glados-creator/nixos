@@ -163,17 +163,83 @@
         lfs.enable = true;
       };
 
+      # --- System-wide shell aliases for Bash and Zsh ---
+      programs.bash = {
+        enable = true;
+        shellAliases = {
+          ll = "eza -larth";
+          ls = "eza";
+          cat = "bat";
+          k = "kubectl";
+          kg = "kubectl get";
+          ka = "kubectl apply";
+          kd = "kubectl delete";
+          kl = "kubectl logs";
+          ke = "kubectl get events -A -w";
+          sys = "systemctl";
+          g = "git";
+          grep = "ripgrep";
+          cd = "zoxide cd";
+          du = "dua";
+          diff = "delta";
+          ping = "prettyping";
+          dig = "doggo";
+        };
+      };
+
+      programs.zsh = {
+        enable = true;
+        shellAliases = {
+          ll = "eza -larth";
+          ls = "eza";
+          cat = "bat";
+          k = "kubectl";
+          kg = "kubectl get";
+          ka = "kubectl apply";
+          kd = "kubectl delete";
+          kl = "kubectl logs";
+          ke = "kubectl get events -A -w";
+          sys = "systemctl";
+          g = "git";
+          grep = "ripgrep";
+          cd = "zoxide cd";
+          du = "dua";
+          diff = "delta";
+          ping = "prettyping";
+          dig = "doggo";
+        };
+      };
+
+      # Fish aliases (also system-wide, but we'll keep them)
       programs.fish = {
         enable = true;
         shellAliases = {
           ll = "eza -larth";
-          eza = "ls"; # alias eza -> ls
-          bat = "cat"; # alisa bat -> cat
-          # rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#astra";
+          ls = "eza";
+          cat = "bat";
+          k = "kubectl";
+          kg = "kubectl get";
+          ka = "kubectl apply";
+          kd = "kubectl delete";
+          kl = "kubectl logs";
+          ke = "kubectl get events -A -w";
+          sys = "systemctl";
+          g = "git";
+          grep = "ripgrep";
+          cd = "zoxide cd";
+          du = "dua";
+          diff = "delta";
+          ping = "prettyping";
+          dig = "doggo";
         };
       };
 
-      # Fonts for better rendering
+      # Global environment variable for Git pager
+      environment.variables = {
+        GIT_PAGER = "delta";
+      };
+
+      # Fonts
       fonts.packages = with pkgs; [
         dejavu_fonts
         liberation_ttf
@@ -222,7 +288,6 @@
         openjdk25
         rustup
         go
-        # mold
         clang_22
         # File management / compression
         git
@@ -230,7 +295,6 @@
         file
         zip
         unzip
-        # tar
         fzf
         jq
         eza
@@ -250,10 +314,21 @@
         podman-compose
         devpod
         devpod-desktop
-
         wireplumber # audio
         pavucontrol # audio gui
         blueman # bluetooth
+
+        # "new" utils
+        ripgrep
+        zoxide
+        dua
+        tealdeer
+        prettyping
+        doggo
+        delta
+        bandwhich
+        zsh
+        lazyjournal
       ];
     };
 }

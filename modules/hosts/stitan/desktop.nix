@@ -34,8 +34,8 @@
       services.xserver.enable = true;
       # services.xserver.fontPath = "/run/current-system/sw/share/X11/fonts";
       # services.xserver.logFile = "/tmp/Xorg.0.log";
-      services.xserver.modules = with pkgs; [ 
-              # x11
+      services.xserver.modules = with pkgs; [
+        # x11
         xinit
         xf86-video-fbdev
         xf86-video-nv
