@@ -155,7 +155,7 @@
         # Tell the system which OpenXR runtime to use
         xdg.configFile."openxr/1/active_runtime.json" = {
           source = "${config.services.monado.package}/share/openxr/1/openxr_monado.json";
-          force = true;   # ← add this line
+          force = true;
         };
 
         # Hand‑tracking models (needed for Monado controller‑free tracking)
