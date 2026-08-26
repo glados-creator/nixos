@@ -1,0 +1,214 @@
+https://xn--gckvb8fzb.com/infrastructure/#infrastructure-providers
+https://odysee.com/@xn--gckvb8fzb.com:7
+https://pastebin.com/u/Ed-Zer
+https://fmhy.net/video
+https://selfh.st/apps/
+
+157741/landman/season/2?e=2&p=1
+296756/president-curtis/season/1?e=4&p=2
+60625/rick-and-morty/season/1?e=1&p=7
+1425/house-of-cards
+61889/marvels-daredevil/season/2?e=3&p=1
+90937/beastars
+192139/the-brink-of-war
+103/taxi-driver
+303991/demolition
+blacklist
+zoolander
+blade
+frankenstein
+newsroom
+The Coldest Game
+Ender's Game
+pulp finction
+project hail mary
+Colossus: The Forbin Project
+shield
+person of interest
+westworld
+assasination classroom
+classroom of the elite
+greatest teacher of all
+sakamoto days
+sakamato desu ka 
+devil bub (devil baby)
+shutter island
+landman
+
+567748/the-guilty
+395993/stronger
+395992/life
+307081/southpaw
+242582/nightcrawler
+181886/enemy
+359410/road-house
+pantheon
+
+flexair ytb
+
+
+f1
+ford v ferrari
+fight club
+megamind
+inglorius basterds
+grand tourismo
+rush
+drive
+jojo
+project manhantan
+aviator
+the great gastby
+catch me if you can
+the world fastest indian
+nixon
+reagan
+the day earth stood still
+nuremberg
+Fracture
+good will hunting
+baby driver
+i robot
+django uncahined 
+10588/the-cat-in-the-hat
+292079/metal-family
+1075519/the-locksmith
+938150/wardriver
+57243/doctor-who
+284052/doctor-strange?p=7
+796499/army-of-thieves
+261579/secret-level
+424/torchwood
+50135/animals-united
+335777/the-nut-job-2-nutty-by-nature
+353486/jumanji-welcome-to-the-jungle
+15097/fear-city-a-family-style-comedy
+84892/the-perks-of-being-a-wallflower
+q=legion
+579974/rrr
+9482/judge-dredd?p=3
+338762/bloodshot
+399035/the-commuter
+1156255/the-engineer
+135397/jurassic-world
+870028/the-accountant%C2%B2
+45612/source-code
+453405/gemini-man
+14154/wargames-the-dead-code
+444639/sync
+733317/monsters-of-man
+605/the-matrix-revolutions
+377264/morgan
+1410082/sniper-the-last-stand
+500664/upgrade
+198184/chappie
+1071585/m3gan-20?p=3
+534/terminator-salvation
+1702/death-machine
+1084199/companion?p=7
+1062215/afraid
+262543/automata
+274855/geostorm
+614933/atlas?p=1
+6473/the-marksman
+550988/free-guy
+157353/transcendence
+575265/mission-impossible---the-final-reckoning
+68726/pacific-rim
+1086260/the-astronaut
+17431/moon
+177572/big-hero-6
+523777/next-gen
+286217/the-martian
+522402/finch
+19959/surrogates
+92749/moon-knight
+606234/archive
+2277/bicentennial-man
+644/ai-artificial-intelligence
+274870/passengers
+152601/her
+157336/interstellar
+4437/2010
+163/oceans-twelve
+1236153/mercy
+10386/the-iron-giant
+39254/real-steel
+315837/ghost-in-the-shell
+335984/blade-runner-2049
+174675/the-machine
+775996/outside-the-wire
+942199/simulant
+264660/ex-machina
+505948/i-am-mother
+777443/the-electric-state
+1001835/wifelike
+1064028/subservience
+983282/the-artifice-girl
+33278/deadly-friend
+1004926/adxm
+13413/burn%C2%B7e
+1040229/tim
+1553332/the-apollo-project
+411143/tau
+274/the-silence-of-the-lambs
+202575/the-house-of-magic?p=7
+60573/silicon-valley/season/1?e=2&p=5
+1408/house
+819475/disneys-animation-magic-treasure-planet
+82703/mr-peabody-sherman
+97727/inside-job
+1411/person-of-interest
+9798/enemy-of-the-state
+321741/concussion
+614587/lupin-iii-the-first
+1701/con-air
+974576/conclave
+67384/goliath
+81358/mr-inbetween
+27205/inception
+106646/the-wolf-of-wall-street
+318846/the-big-short
+65034/too-big-to-fail
+1170944/heist-88
+9950/find-me-guilty
+4656/snipers-valley
+808023/the-virtuoso
+73499/the-double
+308266/war-dogs
+13223/gran-torino
+11975/the-rainmaker
+67899/thick-as-thieves
+1830/lord-of-war
+1377237/runner
+395458/suburbicon
+1020662/inside-man
+950063/the-devil-you-know
+4959/the-international
+893086/the-good-neighbor
+848123/black-site
+127521/6-bullets
+2334/taxi-3
+9739/demolition-man
+v for vendetta
+diary of a wimpy kid
+
+
+"Semi-state coding" typically refers to a semi-state machine approach in software logic or protocol design. 
+It handles transient, partial, or intermediate states (like a multi-step UI flow, partial compilation, or lightweight network session tracking)
+without building a rigorous, fully compliant finite-state machine.
+ 
+Core Concepts
+ 
+- Intermediate Tracking: Keeps just enough context or flags to handle transitional operations 
+  (e.g., waiting for an async acknowledgment or handling a temporary animation block) before committing to a final state.
+
+- Reduced Overhead: Avoids heavy boilerplate or exhaustive state design patterns by relaxing strict transition rules.
+- Partial Completeness: Commonly seen in parsers, protocol emulators (mocking partial TCP/BGP exchanges), 
+  or AST compilation stages where some nodes remain dynamic while others are static.
+
+Could you clarify if you mean a semi-state machine in application logic, semi-automated code generation,
+
+https://docs.goauthentik.io/add-secure-apps/outposts/manual-deploy-kubernetes/
+
+IBM PALM processor 
