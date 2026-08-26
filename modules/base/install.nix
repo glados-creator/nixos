@@ -34,11 +34,11 @@
       # clean /tmp
       boot.tmp.cleanOnBoot = true;
       # network
-      # systemd.services.NetworkManager-wait-online.enable = false; # disables the 1 minute delay
+      systemd.services.NetworkManager-wait-online.enable = false; # disables the 1 minute delay
       networking = {
-        # networkmanager.enable = true;
+        networkmanager.enable = true;
         firewall.enable = true;
-        # dhcpcd.enable = false; # not needed with NetworkManager
+        dhcpcd.enable = false; # not needed with NetworkManager
       };
       networking.nftables.enable = true;
 
@@ -166,78 +166,22 @@
       # --- System-wide shell aliases for Bash and Zsh ---
       programs.bash = {
         enable = true;
-        shellAliases = {
-          ll = "eza -larth";
-          ls = "eza";
-          cat = "bat";
-          k = "kubectl";
-          kg = "kubectl get";
-          ka = "kubectl apply";
-          kd = "kubectl delete";
-          kl = "kubectl logs";
-          ke = "kubectl get events -A -w";
-          sys = "systemctl";
-          g = "git";
-          grep = "ripgrep";
-          cd = "zoxide cd";
-          du = "dua";
-          diff = "delta";
-          ping = "prettyping";
-          dig = "doggo";
-        };
       };
 
       programs.zsh = {
         enable = true;
-        shellAliases = {
-          ll = "eza -larth";
-          ls = "eza";
-          cat = "bat";
-          k = "kubectl";
-          kg = "kubectl get";
-          ka = "kubectl apply";
-          kd = "kubectl delete";
-          kl = "kubectl logs";
-          ke = "kubectl get events -A -w";
-          sys = "systemctl";
-          g = "git";
-          grep = "ripgrep";
-          cd = "zoxide cd";
-          du = "dua";
-          diff = "delta";
-          ping = "prettyping";
-          dig = "doggo";
-        };
       };
 
       # Fish aliases (also system-wide, but we'll keep them)
       programs.fish = {
         enable = true;
-        shellAliases = {
-          ll = "eza -larth";
-          ls = "eza";
-          cat = "bat";
-          k = "kubectl";
-          kg = "kubectl get";
-          ka = "kubectl apply";
-          kd = "kubectl delete";
-          kl = "kubectl logs";
-          ke = "kubectl get events -A -w";
-          sys = "systemctl";
-          g = "git";
-          grep = "ripgrep";
-          cd = "zoxide cd";
-          du = "dua";
-          diff = "delta";
-          ping = "prettyping";
-          dig = "doggo";
-        };
       };
 
       # Global environment variable for Git pager
-      environment.variables = {
-        GIT_PAGER = "delta";
-      };
+      # environment.variables = {
+      #   GIT_PAGER = "delta";
+      #   KUBECONFIG="/etc/rancher/k3s/k3s.yaml";
+      # };
 
       # Fonts
       fonts.packages = with pkgs; [
@@ -329,6 +273,9 @@
         bandwhich
         zsh
         lazyjournal
+        bluetui
+        wpa_supplicant
+        wpa_supplicant_gui
       ];
     };
 }
