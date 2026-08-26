@@ -41,39 +41,12 @@
 
       networking = {
         hostName = "stitan";
+        networkmanager.enable = true;
         interfaces.eno1 = {
           useDHCP = false;
           wakeOnLan.enable = true;
-          ipv4.addresses = [
-            {
-              address = "192.168.1.14";
-              prefixLength = 24;
-            }
-            {
-              address = "172.16.0.14";
-              prefixLength = 24;
-            }
-          ];
-          # ipv4.routes = [
-          #   {
-          #     address = "0.0.0.0";
-          #     prefixLength = 0;
-          #     via = "172.16.0.1";
-          #     metric = 200;
-          #   }
-          # ];
         };
-        defaultGateway = "192.168.1.254";
-
-        nameservers = [
-          "172.16.0.3"
-          "192.168.0.3"
-          "1.1.1.1"
-          "192.168.1.254"
-        ];
-
-        # Turn off NetworkManager – it would fight with manual config
-        networkmanager.enable = false;
+        # defaultGateway = "192.168.1.254";
       };
 
       boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_18;
@@ -91,7 +64,7 @@
           "input"
           "render"
           "pipewire"
-          # "networkmanager"
+          "networkmanager"
           "systemd-journal"
           "docker"
           "kvm"
