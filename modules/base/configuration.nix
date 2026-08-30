@@ -59,6 +59,7 @@
           "xfs"
           "overlay"
           "fuse"
+          "nf_tables" "vxlan" "ip_tables" "ip6_tables"
         ];
         # nfs
         supportedFilesystems = [

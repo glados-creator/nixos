@@ -22,6 +22,8 @@
       environment.systemPackages = with pkgs; [
         k3s
         etcd
+        cni-plugins
+        calico-cni-plugin
         multus-cni
         linkerd
       ];
@@ -33,10 +35,13 @@
           6443 # Kubernetes API server
           2379 # etcd client
           2380 # etcd peer
-          8472 # Flannel VXLAN (if using flannel)
           10250 # kubelet
+          5473 # Calico Typha
+          179 # Calico BGP
         ];
-        allowedUDPPorts = [ 8472 ]; # Flannel VXLAN
+        allowedUDPPorts = [
+          4789 # Calico VXLAN
+        ];
       };
       # services.k3s.enable = false;
 
@@ -55,6 +60,7 @@
           "--disable=servicelb"
           "--disable=metrics-server"
           "--kubelet-arg=--fail-swap-on=false"
+          "--kube-proxy-arg=mode=nftables"
           # "--node-label=server=true"
           "--node-label=agent=true"
         ];
@@ -73,11 +79,35 @@
       #   # "D! /var/lib/rancher/k3s/agent/ 0755 root root -"
       # ];
 
+      systemd.tmpfiles.rules = [
+        "L /opt/cni/bin/bandwidth - - - - ${pkgs.cni-plugins}/bin/bandwidth"
+        "L /opt/cni/bin/bridge - - - - ${pkgs.cni-plugins}/bin/bridge"
+        "L /opt/cni/bin/dhcp - - - - ${pkgs.cni-plugins}/bin/dhcp"
+        "L /opt/cni/bin/dummy - - - - ${pkgs.cni-plugins}/bin/dummy"
+        "L /opt/cni/bin/firewall - - - - ${pkgs.cni-plugins}/bin/firewall"
+        "L /opt/cni/bin/host-device - - - - ${pkgs.cni-plugins}/bin/host"
+        "L /opt/cni/bin/host-local - - - - ${pkgs.cni-plugins}/bin/host"
+        "L /opt/cni/bin/ipvlan - - - - ${pkgs.cni-plugins}/bin/ipvlan"
+        "L /opt/cni/bin/loopback - - - - ${pkgs.cni-plugins}/bin/loopback"
+        "L /opt/cni/bin/macvlan - - - - ${pkgs.cni-plugins}/bin/macvlan"
+        "L /opt/cni/bin/portmap - - - - ${pkgs.cni-plugins}/bin/portmap"
+        "L /opt/cni/bin/ptp - - - - ${pkgs.cni-plugins}/bin/ptp"
+        "L /opt/cni/bin/sbr - - - - ${pkgs.cni-plugins}/bin/sbr"
+        "L /opt/cni/bin/static - - - - ${pkgs.cni-plugins}/bin/static"
+        "L /opt/cni/bin/tap - - - - ${pkgs.cni-plugins}/bin/tap"
+        "L /opt/cni/bin/tuning - - - - ${pkgs.cni-plugins}/bin/tuning"
+        "L /opt/cni/bin/vlan - - - - ${pkgs.cni-plugins}/bin/vlan"
+        "L /opt/cni/bin/vrf - - - - ${pkgs.cni-plugins}/bin/vrf"
+      ];
+
       boot.kernel.sysctl = {
         # Increase the system-wide limit for inotify watches
         "fs.inotify.max_user_watches" = 524288;
         # Increase the system-wide limit for open file descriptors
         "fs.file-max" = 65535;
+        # needed for multus multiple NICs
+        "net.ipv4.conf.all.rp_filter" = 2;
+        "net.ipv4.conf.default.rp_filter" = 2;
       };
 
       # environment.etc."cni/net.d/00-multus.conf" = {

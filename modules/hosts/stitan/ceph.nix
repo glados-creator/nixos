@@ -13,30 +13,6 @@
       ...
     }:
     {
-      environment.systemPackages = with pkgs; [
-        ceph
-        ceph-csi
-        libceph
-        ceph-client
-      ];
-
-      networking.firewall = {
-        allowedTCPPorts = [
-          6789
-          3300
-        ];
-        allowedTCPPortRanges = [
-          {
-            from = 6800;
-            to = 7300;
-          }
-        ];
-      };
-
-      # nfs
-      services.rpcbind.enable = true;
-      # Rook
-
       services.ceph = {
         enable = true;
         global = {
