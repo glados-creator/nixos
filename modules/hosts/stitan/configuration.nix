@@ -28,7 +28,8 @@
         self.nixosModules.bootsb
         self.nixosModules.stitanNvidia390
 
-        # self.nixosModules.k3s
+        self.nixosModules.CommunCeph
+        self.nixosModules.k3s
         self.nixosModules.k3sserver
         self.nixosModules.k3sGpu
         self.nixosModules.tailscale
