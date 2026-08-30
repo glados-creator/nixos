@@ -29,15 +29,16 @@
         self.nixosModules.bootsb
         self.nixosModules.jupiterNvidia580
 
+        self.nixosModules.CommunCeph
         self.nixosModules.k3s
         self.nixosModules.k3sGpu
         self.nixosModules.tailscale
         self.nixosModules.rdp
-        self.nixosModules.VR
+        # self.nixosModules.VR
 
         self.nixosModules.jupiterCeph
         self.nixosModules.gladosDesktop
-        self.nixosModules.gladosHome
+        self.nixosModules.jupiterHome
       ];
 
       networking = {

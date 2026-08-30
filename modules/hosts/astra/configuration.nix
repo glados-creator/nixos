@@ -31,6 +31,7 @@
         self.nixosModules.bootsb
         self.nixosModules.nvidia-latest
 
+        self.nixosModules.CommunCeph
         self.nixosModules.k3s
         self.nixosModules.k3sGpu
         self.nixosModules.tailscale
