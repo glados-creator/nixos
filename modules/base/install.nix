@@ -200,6 +200,7 @@
 
         nixfmt
         nixfmt-tree
+        nix-tree
 
         usb-modeswitch
         sane-airscan # scanner

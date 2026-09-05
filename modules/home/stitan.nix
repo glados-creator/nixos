@@ -59,7 +59,7 @@
         obs-studio
 
         # Office
-        libreoffice-stable
+        libreoffice-fresh
 
         # Utilities / system
         fishPlugins.fzf-fish
@@ -152,7 +152,7 @@
             obs-studio
 
             # Office
-            libreoffice-stable
+            libreoffice-fresh
 
             # Utilities / system
             fishPlugins.fzf-fish
