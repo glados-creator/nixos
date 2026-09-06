@@ -35,7 +35,6 @@
         self.nixosModules.tailscale
         self.nixosModules.rdp
 
-        self.nixosModules.stitanCeph
         self.nixosModules.stitanDesktop
         self.nixosModules.stitanHome
       ];
