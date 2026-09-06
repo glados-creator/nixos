@@ -38,7 +38,6 @@
         self.nixosModules.rdp
         self.nixosModules.VR
 
-        self.nixosModules.astraCeph
         self.nixosModules.gladosDesktop
         self.nixosModules.gladosHome
       ];

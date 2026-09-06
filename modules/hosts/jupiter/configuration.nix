@@ -36,7 +36,6 @@
         self.nixosModules.rdp
         # self.nixosModules.VR
 
-        self.nixosModules.jupiterCeph
         self.nixosModules.gladosDesktop
         self.nixosModules.jupiterHome
       ];
