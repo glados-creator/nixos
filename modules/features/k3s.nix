@@ -60,9 +60,10 @@
           "--disable=servicelb"
           "--disable=metrics-server"
           "--kubelet-arg=--fail-swap-on=false"
-          "--kube-proxy-arg=mode=nftables"
+          "--kube-proxy-arg=--proxy-mode=nftables"
           # "--node-label=server=true"
           "--node-label=agent=true"
+          # "--kubelet-arg=--masquerade-all=true"
         ];
       };
 
