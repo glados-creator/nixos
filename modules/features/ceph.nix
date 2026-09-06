@@ -38,15 +38,15 @@
       services.rpcbind.enable = true;
       # Rook
 
-      services.ceph = {
-        enable = true;
-        global = {
-          fsid = (builtins.readFile ./cephfsid.crt); # uuidgen
-          monHost = "192.168.1.14";
-          monInitialMembers = "stitan";
-          publicNetwork = "192.168.1.0/24";
-          clusterNetwork = "192.168.1.0/24";
-        };
-      };
+      # services.ceph = {
+      #   enable = true;
+      #   global = {
+      #     fsid = (builtins.readFile ./cephfsid.crt); # uuidgen
+      #     monHost = "192.168.1.14";
+      #     monInitialMembers = "stitan";
+      #     publicNetwork = "192.168.1.0/24";
+      #     clusterNetwork = "192.168.1.0/24";
+      #   };
+      # };
     };
 }
