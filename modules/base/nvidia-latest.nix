@@ -27,7 +27,7 @@
       hardware.nvidia = {
         package = config.boot.kernelPackages.nvidiaPackages.latest; # pkgs.linuxPackages.nvidiaPackages.stable;
         powerManagement.enable = true;
-        open = false;
+        open = true;
         nvidiaSettings = true;
         modesetting.enable = true;
       };

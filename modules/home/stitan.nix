@@ -19,8 +19,6 @@
 
       # System-level packages for user glados (some overlap with base, but that's fine)
       environment.systemPackages = with pkgs; [
-        k9s
-        kubectl
         nushell
         carapace
         carapace-bridge
@@ -59,7 +57,7 @@
         obs-studio
 
         # Office
-        libreoffice-fresh
+        libreoffice-stable
 
         # Utilities / system
         fishPlugins.fzf-fish
@@ -101,9 +99,6 @@
           home.packages = with pkgs; [
             home-manager
 
-            devenv
-            k9s
-            kubectl
             zoxide
             carapace
             carapace-bridge
@@ -152,7 +147,7 @@
             obs-studio
 
             # Office
-            libreoffice-fresh
+            libreoffice-stable
 
             # Utilities / system
             fishPlugins.fzf-fish
@@ -233,9 +228,10 @@
               kl = "kubectl logs";
               kds = "kubectl describe";
               ke = "kubectl get events -A -w";
+              ktn = "watch kubectl top node";
               sys = "systemctl";
               g = "git";
-              grep = "ripgrep";
+              grep = "rg";
               cd = "z";
               du = "dua";
               diff = "delta";
@@ -266,9 +262,10 @@
               kl = "kubectl logs";
               kds = "kubectl describe";
               ke = "kubectl get events -A -w";
+              ktn = "watch kubectl top node";
               sys = "systemctl";
               g = "git";
-              grep = "ripgrep";
+              grep = "rg";
               cd = "z";
               du = "dua";
               diff = "delta";
@@ -299,9 +296,10 @@
               kl = "kubectl logs";
               kds = "kubectl describe";
               ke = "kubectl get events -A -w";
+              ktn = "watch kubectl top node";
               sys = "systemctl";
               g = "git";
-              grep = "ripgrep";
+              grep = "rg";
               cd = "z";
               du = "dua";
               diff = "delta";
@@ -341,9 +339,10 @@
               alias kl = kubectl logs
               alias kds = kubectl describe
               alias ke = kubectl get events -A -w
+              alias ktn = watch kubectl top node
               alias sys = systemctl
               alias g = git
-              alias grep = ripgrep
+              alias grep = rg
               alias cd = z
               alias du = dua
               alias diff = delta
