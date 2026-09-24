@@ -31,7 +31,7 @@
         self.nixosModules.CommunCeph
         self.nixosModules.k3s
         self.nixosModules.k3sserver
-        self.nixosModules.k3sGpu
+        # self.nixosModules.k3sGpu
         self.nixosModules.tailscale
         self.nixosModules.rdp
 
@@ -49,7 +49,7 @@
         # defaultGateway = "192.168.1.254";
       };
 
-      boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_18;
+      # boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_18;
       # services.qemuGuest.enable = true;
 
       users.users.stitan = {

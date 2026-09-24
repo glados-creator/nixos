@@ -277,6 +277,7 @@
         bluetui
         wpa_supplicant
         wpa_supplicant_gui
+        devenv
       ];
     };
 }

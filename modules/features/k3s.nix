@@ -26,6 +26,9 @@
         calico-cni-plugin
         multus-cni
         linkerd
+        kubevirt
+        kubectl
+        k9s
       ];
 
       # Essential firewall configuration for cluster communication
