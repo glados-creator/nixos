@@ -35,7 +35,7 @@
       nix.settings.allow-import-from-derivation = true; # nixos impure mode
       # nix.settings.pure-eval = false;  # sorry nixos
       # boot.kernelPackages = pkgs.linuxPackages_latest;
-      boot.kernelPackages = pkgs.linuxPackages_6_18;
+      boot.kernelPackages = pkgs.linuxPackages_latest;
       boot = {
         kernelParams = [
           "systemd.log_level=info" # debug
