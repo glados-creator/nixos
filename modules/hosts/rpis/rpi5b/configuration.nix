@@ -42,6 +42,7 @@
           "video"
           "input"
           "render"
+          "podman"
           "pipewire"
           "networkmanager"
           "systemd-journal"

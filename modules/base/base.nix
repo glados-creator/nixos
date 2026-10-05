@@ -34,6 +34,8 @@
       # nix.settings.auto-allocate-uids = true;
       nix.settings.allow-import-from-derivation = true; # nixos impure mode
       # nix.settings.pure-eval = false;  # sorry nixos
+      # enable zram
+      zramSwap.enable = true;
       # boot.kernelPackages = pkgs.linuxPackages_latest;
       boot.kernelPackages = pkgs.linuxPackages_latest;
       boot = {
@@ -41,6 +43,8 @@
           "systemd.log_level=info" # debug
           "systemd.log_target=console"
         ];
+        # clean /tmp
+        tmp.cleanOnBoot = true;
         # Boot kernel parameters
         # kernelParams = amd vs intel
         # --- Kernel modules (VFIO + Wacom / HID) ---
@@ -60,7 +64,10 @@
           "xfs"
           "overlay"
           "fuse"
-          "nf_tables" "vxlan" "ip_tables" "ip6_tables"
+          "nf_tables"
+          "vxlan"
+          "ip_tables"
+          "ip6_tables"
         ];
         # nfs
         supportedFilesystems = [

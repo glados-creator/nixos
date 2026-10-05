@@ -66,7 +66,7 @@
           "pipewire"
           "networkmanager"
           "systemd-journal"
-          "docker"
+          "podman"
           "kvm"
           "libvirtd"
           "ceph"
