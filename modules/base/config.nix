@@ -4,12 +4,13 @@
   ...
 }:
 {
+  # Essentials every machine needs: locale, shells, git, ssh.
+  # Desktop-only stuff moved to apps.nix / peripherals.nix, packages to install.nix.
   flake.nixosModules.config =
     {
       config,
       pkgs,
       lib,
-      stdenv,
       ...
     }:
     {
@@ -34,17 +35,9 @@
         lfs.enable = true;
       };
 
-      programs.bash = {
-        enable = true;
-      };
-
-      programs.zsh = {
-        enable = true;
-      };
-
-      programs.fish = {
-        enable = true;
-      };
+      programs.bash.enable = true;
+      programs.zsh.enable = true;
+      programs.fish.enable = true;
 
       # ssh
       programs.ssh = {
@@ -58,103 +51,5 @@
           PermitRootLogin = "no";
         };
       };
-
-      # Fonts
-      fonts.packages = with pkgs; [
-        dejavu_fonts
-        liberation_ttf
-        fira-code
-        fira-code-symbols
-        noto-fonts
-      ];
-
-      programs.appimage = {
-        enable = true;
-        binfmt = true;
-      };
-
-      services.flatpak.enable = true;
-
-      hardware.enableRedistributableFirmware = true;
-      hardware.enableAllFirmware = true;
-      hardware.steam-hardware.enable = true;
-      hardware.inputmodule.enable = true;
-      hardware.xpad-noone.enable = true; # Xpad driver
-      hardware.xone.enable = true; # xone driver for Xbox One
-      hardware.xpadneo.enable = true; # Enable the xpadneo driver for Xbox One wireless controllers
-
-      services.libinput.enable = true;
-
-      environment.systemPackages = with pkgs; [
-        nixfmt
-        nixfmt-tree
-        nix-tree
-        openssh
-        wget
-        curl
-        iftop
-        rsync
-        dnsutils
-
-        # monitor
-        htop
-        btop
-        iotop
-        lm_sensors
-        pciutils
-        usbutils
-
-        # disk
-        lvm2
-        util-linux
-        e2fsprogs
-        nfs-utils
-        xfsprogs
-
-        # File management / compression
-        git
-        tree
-        file
-        zip
-        unzip
-        fzf
-        jq
-        eza
-        bat
-        vim
-        nano
-        fd
-        fastfetch
-        busybox
-        less
-        tmux
-
-        # "new" utils
-        ripgrep
-        zoxide
-        dua
-        tealdeer # tldr man
-        prettyping
-        doggo
-        delta
-        bandwhich
-        zsh
-        lazyjournal
-
-        # idk
-        libwacom
-        mesa
-        mesa-demos
-        vulkan-tools
-
-        # prog
-        python315
-        openjdk25
-        rustup
-        go
-        clang_22
-        graphviz
-        gh
-      ];
     };
 }

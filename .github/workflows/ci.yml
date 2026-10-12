@@ -1,0 +1,83 @@
+name: ci
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write # the format job pushes its fixes back to the branch
+
+env:
+  # lets nixConfig in flake.nix add the cachyos-kernel and nixos-raspberrypi caches
+  NIX_EXTRA_CONF: |
+    accept-flake-config = true
+
+jobs:
+  # 1. treefmt: format the tree and push the result to the branch
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # the branch itself, not the detached PR merge commit, so we can push
+          ref: ${{ github.head_ref || github.ref_name }}
+      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: ${{ env.NIX_EXTRA_CONF }}
+
+      - name: treefmt
+        run: nix shell nixpkgs#treefmt nixpkgs#nixfmt -c treefmt
+
+      - name: Push formatting changes
+        # forks can't be pushed to: they fail the check below instead
+        if: github.event.pull_request.head.repo.fork != true
+        run: |
+          if git diff --quiet; then
+            echo "already formatted"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "style: treefmt"
+          git push
+
+  build:
+    name: build ${{ matrix.host }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - { host: astra, runner: ubuntu-latest }
+          - { host: jupiter, runner: ubuntu-latest }
+          - { host: stitan, runner: ubuntu-latest }
+          # Pis build natively on arm runners
+          - { host: rpi5a, runner: ubuntu-26.04-arm }
+          - { host: rpi5b, runner: ubuntu-26.04-arm }
+    steps:
+      - name: Free disk space
+        if: runner.arch == 'X64'
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          docker-images: true
+          large-packages: false
+
+      - uses: actions/checkout@v7
+
+      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          # lets nixConfig in flake.nix add the cachyos-kernel and nixos-raspberrypi caches
+          extra-conf: |
+            accept-flake-config = true
+
+      - name: Build ${{ matrix.host }}
+        run: |
+          nix build -L --no-link --accept-flake-config \
+            ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel"

@@ -9,12 +9,21 @@
       config,
       pkgs,
       lib,
-      stdenv,
       ...
     }:
     {
       programs.virt-manager.enable = true;
-      # virt-manager qemu kvm docker podman
+
+      # vfio / kvm (moved here from base.nix)
+      boot.kernelModules = [
+        "kvm"
+        "vfio"
+        "vfio_iommu_type1"
+      ];
+
+      # virt-manager qemu kvm podman
+      # NOTE: standalone containerd + cri-o removed from here.
+      # k3s now uses CRI-O via modules/features/k3s-crio.nix
       virtualisation = {
         libvirtd.enable = true;
         libvirtd.qemu = {
@@ -22,7 +31,6 @@
           swtpm.enable = true; # TPM 2.0 for Windows 11 guests
         };
         spiceUSBRedirection.enable = true;
-        containerd.enable = true;
         docker.enable = false;
         podman = {
           enable = true;
@@ -38,8 +46,6 @@
           pkgs.cni-plugins
           pkgs.dnsname-cni
         ];
-
-        cri-o.enable = true;
       };
       environment.systemPackages = with pkgs; [
         # virt

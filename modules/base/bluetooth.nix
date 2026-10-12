@@ -4,12 +4,12 @@
   ...
 }:
 {
-  flake.nixosModules.bleutooth =
+  # was misspelled `bleutooth`; profiles reference `bluetooth`
+  flake.nixosModules.bluetooth =
     {
       config,
       pkgs,
       lib,
-      stdenv,
       ...
     }:
     {

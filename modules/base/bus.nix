@@ -9,7 +9,6 @@
       config,
       pkgs,
       lib,
-      stdenv,
       ...
     }:
     {
@@ -20,9 +19,9 @@
       services.dbus.enable = true;
       # Upower for power management
       services.upower.enable = true;
-      # hibernate on powerkey
+      # hibernate on powerkey (mkDefault: a host can override if the hardened kernel blocks hibernation)
       services.logind.settings.Login = {
-        HandlePowerKey = "hibernate";
+        HandlePowerKey = lib.mkDefault "hibernate";
       };
 
       xdg.portal = {

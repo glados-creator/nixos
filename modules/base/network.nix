@@ -9,7 +9,6 @@
       config,
       pkgs,
       lib,
-      stdenv,
       ...
     }:
     {
@@ -22,7 +21,7 @@
       networking.nftables.enable = true;
       environment.systemPackages = with pkgs; [
         wpa_supplicant
-        wpa_supplicant_gui
+        # wpa_supplicant_gui -> apps.nix
       ];
     };
 }
