@@ -4,12 +4,13 @@
   ...
 }:
 {
+  # Nix / system plumbing shared by EVERY machine (x86 and Pi).
+  # Kernel lives in kernel.nix, packages in install.nix.
   flake.nixosModules.base =
     {
       config,
       pkgs,
       lib,
-      stdenv,
       ...
     }:
     {
@@ -23,8 +24,8 @@
       ];
       # nix allow proprietary pkgs
       nixpkgs.config.allowUnfree = true;
-      # fix download buffer
-      nix.settings.download-buffer-size = 10737418240; # 10GB in bytes
+      # fix download buffer (mkDefault: the Pi profile lowers it)
+      nix.settings.download-buffer-size = lib.mkDefault 10737418240; # 10GB in bytes
       # auto updates
       system.autoUpgrade.enable = true;
       # nix garbage collector
@@ -34,34 +35,16 @@
       # nix.settings.auto-allocate-uids = true;
       nix.settings.allow-import-from-derivation = true; # nixos impure mode
       # nix.settings.pure-eval = false;  # sorry nixos
-      # boot.kernelPackages = pkgs.linuxPackages_latest;
-      boot.kernelPackages = pkgs.linuxPackages_latest;
+      # enable zram
+      zramSwap.enable = true;
+
       boot = {
         kernelParams = [
           "systemd.log_level=info" # debug
           "systemd.log_target=console"
         ];
-        # Boot kernel parameters
-        # kernelParams = amd vs intel
-        # --- Kernel modules (VFIO + Wacom / HID) ---
-        kernelModules = [
-          "kvm"
-          "vfio"
-          "vfio_iommu_type1"
-          # Wacom / tablet
-          "wacom"
-          "hid"
-          "uhid"
-          "usbhid"
-          "hid-generic"
-          "hid_xpadneo"
-          "ceph"
-          "rbd"
-          "xfs"
-          "overlay"
-          "fuse"
-          "nf_tables" "vxlan" "ip_tables" "ip6_tables"
-        ];
+        # clean /tmp
+        tmp.cleanOnBoot = true;
         # nfs
         supportedFilesystems = [
           "nfs"

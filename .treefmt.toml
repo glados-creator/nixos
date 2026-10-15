@@ -1,0 +1,6 @@
+[formatter.nixfmt]
+command = "nixfmt"
+includes = ["*.nix"]
+
+[global]
+excludes = ["result", ".git/**", "flake.lock"]

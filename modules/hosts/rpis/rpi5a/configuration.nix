@@ -4,8 +4,11 @@
   ...
 }:
 {
-  flake.nixosConfigurations.rpi5a = inputs.nixpkgs.lib.nixosSystem {
+  # Built with nixos-raspberrypi's nixosSystem (vendor kernel, own nixpkgs).
+  flake.nixosConfigurations.rpi5a = inputs.nixos-raspberrypi.lib.nixosSystem {
+    specialArgs = { inherit inputs; };
     modules = [
+      inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.base
       self.nixosModules.rpi5aConfig
     ];
   };
@@ -15,21 +18,21 @@
       config,
       pkgs,
       lib,
-      stdenv,
       ...
     }:
     {
       imports = [
+        self.nixosModules.profile-minimal-rpi
+        self.nixosModules.rpi5Disko
         self.nixosModules.CommunCeph
         self.nixosModules.k3s
+        self.nixosModules.k3s-crio
         self.nixosModules.tailscale
+        # the module exported by this host's hardware-configuration.nix (fileSystems etc.)
+        # self.nixosModules.rpi5aHardware
       ];
 
-      networking = {
-        hostName = "rpi5a";
-        networkmanager.enable = true;
-        # defaultGateway = "192.168.1.254";
-      };
+      networking.hostName = "rpi5a";
 
       users.users.rpi5a = {
         shell = pkgs.fish;
@@ -42,9 +45,12 @@
           "video"
           "input"
           "render"
-          "pipewire"
           "networkmanager"
           "systemd-journal"
+          "dialout"
+          "gpio"
+          "i2c"
+          "spi"
         ];
       };
     };
