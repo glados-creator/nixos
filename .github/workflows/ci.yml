@@ -25,8 +25,10 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          # the branch itself, not the detached PR merge commit, so we can push
-          ref: ${{ github.head_ref || github.ref_name }}
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+          persist-credentials: true
+
       - uses: DeterminateSystems/nix-installer-action@main
         with:
           extra-conf: ${{ env.NIX_EXTRA_CONF }}
@@ -34,18 +36,14 @@ jobs:
       - name: treefmt
         run: nix shell nixpkgs#treefmt nixpkgs#nixfmt -c treefmt
 
-      - name: Push formatting changes
-        # forks can't be pushed to: they fail the check below instead
-        if: github.event.pull_request.head.repo.fork != true
-        run: |
-          if git diff --quiet; then
-            echo "already formatted"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -am "style: treefmt"
-          git push
+      - name: Auto-commit generated docs & format
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        uses: EndBug/add-and-commit@v11
+        with:
+          default_author: github_actions
+          message: "[ci] auto format"
+          push: true
+          new_branch: ${{ github.head_ref }}
 
   build:
     name: build ${{ matrix.host }}
@@ -54,12 +52,12 @@ jobs:
       fail-fast: true
       matrix:
         include:
-          - { host: astra, runner: ubuntu-latest }
-          - { host: jupiter, runner: ubuntu-latest }
+          # - { host: astra, runner: ubuntu-latest }
+          # - { host: jupiter, runner: ubuntu-latest }
           - { host: stitan, runner: ubuntu-latest }
           # Pis build natively on arm runners
-          - { host: rpi5a, runner: ubuntu-26.04-arm }
-          - { host: rpi5b, runner: ubuntu-26.04-arm }
+          # - { host: rpi5a, runner: ubuntu-26.04-arm }
+          # - { host: rpi5b, runner: ubuntu-26.04-arm }
     steps:
       - name: Free disk space
         if: runner.arch == 'X64'

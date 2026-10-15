@@ -26,6 +26,8 @@
 
     # Pi hosts. No `follows`: it brings its own nixpkgs and kernel.
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+    # cachyos hardened kernel
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);

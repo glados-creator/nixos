@@ -1,5 +1,12 @@
 # glados-creator nixos config
 here is my new nixos config with the dendritic pattern
+
+there's a profile for each of my computers 
+- astra : my main
+- jupiter : secondary
+- stitan : low power "backup"
+- rpis5/4
+
 thanks to 
 [![Ultimate NixOS Desktop: Niri, Noctalia Shell, and the Dendritic Pattern | Full Setup](https://img.youtube.com/vi/aNgujRXDTdE/0.jpg)](https://www.youtube.com/watch?v=aNgujRXDTdE)
 so everything is a flake module
