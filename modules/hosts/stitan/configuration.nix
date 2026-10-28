@@ -21,11 +21,7 @@
     }:
     {
       imports = [
-        inputs.lanzaboote.nixosModules.lanzaboote
-        inputs.nix-ld.nixosModules.nix-ld
-
-        self.nixosModules.base
-        self.nixosModules.bootsb
+        self.nixosModules.profile-minimal
         self.nixosModules.stitanNvidia390
 
         self.nixosModules.CommunCeph
@@ -66,7 +62,7 @@
           "pipewire"
           "networkmanager"
           "systemd-journal"
-          "docker"
+          "podman"
           "kvm"
           "libvirtd"
           "ceph"

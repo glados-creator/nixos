@@ -22,11 +22,7 @@
     {
 
       imports = [
-        inputs.lanzaboote.nixosModules.lanzaboote
-        inputs.nix-ld.nixosModules.nix-ld
-
-        self.nixosModules.base
-        self.nixosModules.bootsb
+        self.nixosModules.profile-full
         self.nixosModules.jupiterNvidia580
 
         self.nixosModules.CommunCeph
@@ -70,7 +66,7 @@
           "pipewire"
           "networkmanager"
           "systemd-journal"
-          "docker"
+          "podman"
           "kvm"
           "libvirtd"
           "ceph"
