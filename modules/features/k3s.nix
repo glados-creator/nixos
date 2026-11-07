@@ -67,6 +67,8 @@
           # "--node-label=server=true"
           "--node-label=agent=true"
           # "--kubelet-arg=--masquerade-all=true"
+          "--container-runtime-endpoint=unix:///var/run/crio/crio.sock"
+          "--kubelet-arg=cgroup-driver=systemd"
         ];
       };
 
@@ -89,8 +91,8 @@
         "C+ /opt/cni/bin/dhcp - - - - ${pkgs.cni-plugins}/bin/dhcp"
         "C+ /opt/cni/bin/dummy - - - - ${pkgs.cni-plugins}/bin/dummy"
         "C+ /opt/cni/bin/firewall - - - - ${pkgs.cni-plugins}/bin/firewall"
-        "C+ /opt/cni/bin/host-device - - - - ${pkgs.cni-plugins}/bin/host"
-        "C+ /opt/cni/bin/host-local - - - - ${pkgs.cni-plugins}/bin/host"
+        "C+ /opt/cni/bin/host-device - - - - ${pkgs.cni-plugins}/bin/host-device"
+        "C+ /opt/cni/bin/host-local - - - - ${pkgs.cni-plugins}/bin/host-local"
         "C+ /opt/cni/bin/ipvlan - - - - ${pkgs.cni-plugins}/bin/ipvlan"
         "C+ /opt/cni/bin/loopback - - - - ${pkgs.cni-plugins}/bin/loopback"
         "C+ /opt/cni/bin/macvlan - - - - ${pkgs.cni-plugins}/bin/macvlan"
@@ -157,6 +159,48 @@
                 insecure_skip_verify: true
         '';
       };
+
+      virtualisation.cri-o.enable = true;
+
+      environment.etc."crio/crio.conf.d/10-k3s.conf".text = ''
+        [crio]
+        root = "/var/lib/crio"
+
+        [crio.runtime]
+        cgroup_manager = "systemd"
+        conmon_cgroup = "pod"
+
+        [crio.network]
+        network_dir = "/etc/cni/net.d/"
+        plugin_dirs = ["/opt/cni/bin"]
+      '';
+
+      # nixpkgs' containers module only has the deprecated v1 options on this pin,
+      # so write a v2 registries.conf (with Harbor mirrors) ourselves.
+      environment.etc."containers/registries.conf".source = lib.mkForce (
+        (pkgs.formats.toml { }).generate "registries.conf" {
+          unqualified-search-registries = [ "docker.io" ];
+          registry =
+            lib.mapAttrsToList
+              (reg: project: {
+                prefix = reg;
+                location = reg;
+                mirror = [
+                  {
+                    location = "harbor.main.home/${project}";
+                    insecure = true;
+                  }
+                ];
+              })
+              {
+                "docker.io" = "docker";
+                "ghcr.io" = "ghcr";
+                "quay.io" = "quay";
+                "codeberg.org" = "codeberg";
+                "lscr.io" = "lscr";
+              };
+        }
+      );
 
     };
 }

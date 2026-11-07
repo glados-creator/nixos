@@ -16,7 +16,11 @@
       # No nvidia.acceptLicense / allowBroken needed — nouveau is fully FOSS,
       # nothing to license-accept and nothing marked broken.
 
-      services.xserver.videoDrivers = [ "nouveau" "modesetting" "fbdev" ];
+      services.xserver.videoDrivers = [
+        "nouveau"
+        "modesetting"
+        "fbdev"
+      ];
 
       hardware.graphics = {
         enable = true;
@@ -36,9 +40,9 @@
       boot.kernelParams = [ ];
 
       environment.systemPackages = with pkgs; [
-        nvtopPackages.full   # nvidia-specific nvtop variant swapped for the generic build
+        nvtopPackages.full # nvidia-specific nvtop variant swapped for the generic build
         nvitop
-        btop                 # btop-cuda has no meaning without CUDA
+        btop # btop-cuda has no meaning without CUDA
         # nvidia-container-toolkit
         opencl-caps-viewer
         libva-vdpau-driver

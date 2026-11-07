@@ -33,6 +33,7 @@
         "usbhid"
         "hid-generic"
         "hid_xpadneo"
+        "pwm_fan"
       ];
 
       environment.systemPackages = with pkgs; [

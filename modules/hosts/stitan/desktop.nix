@@ -15,10 +15,30 @@
     {
       # PAM limits
       security.pam.loginLimits = [
-        { domain = "@sddm"; type = "soft"; item = "rtprio"; value = "20"; }
-        { domain = "@sddm"; type = "soft"; item = "nice"; value = "-20"; }
-        { domain = "@pipewire"; type = "soft"; item = "rtprio"; value = "20"; }
-        { domain = "@pipewire"; type = "soft"; item = "nice";   value = "-20"; }
+        {
+          domain = "@sddm";
+          type = "soft";
+          item = "rtprio";
+          value = "20";
+        }
+        {
+          domain = "@sddm";
+          type = "soft";
+          item = "nice";
+          value = "-20";
+        }
+        {
+          domain = "@pipewire";
+          type = "soft";
+          item = "rtprio";
+          value = "20";
+        }
+        {
+          domain = "@pipewire";
+          type = "soft";
+          item = "nice";
+          value = "-20";
+        }
       ];
 
       # # Enable SDDM ~kde plasma login manager~ as display manager
