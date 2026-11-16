@@ -7,6 +7,16 @@ there's a profile for each of my computers
 - stitan : low power "backup"
 - rpis5/4
 
+```bash
+install cmd
+nix run github:nix-community/nixos-anywhere -- \
+    --flake .#<conf> \
+    --target-host root@192.168.1.<ip> \
+    --phases disko,install,reboot \
+    # --disko-mode mount \
+    --build-on remote
+```
+
 thanks to 
 [![Ultimate NixOS Desktop: Niri, Noctalia Shell, and the Dendritic Pattern | Full Setup](https://img.youtube.com/vi/aNgujRXDTdE/0.jpg)](https://www.youtube.com/watch?v=aNgujRXDTdE)
 so everything is a flake module
