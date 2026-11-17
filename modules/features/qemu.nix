@@ -21,6 +21,7 @@
         "vfio_iommu_type1"
         "vfio_pci"
         "kvm-amd"
+        "kvm-intel"
       ];
       boot.kernelParams = [
         "iommu=pt"

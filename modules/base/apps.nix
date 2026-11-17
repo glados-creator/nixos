@@ -31,6 +31,7 @@
       environment.systemPackages = with pkgs; [
         coolercontrol.coolercontrol-gui
         wpa_supplicant_gui
+        just # just deploy
       ];
     };
 }

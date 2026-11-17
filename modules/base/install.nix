@@ -56,6 +56,7 @@
         fastfetch
         ripgrep
         fd
+        gnumake
       ];
     };
 

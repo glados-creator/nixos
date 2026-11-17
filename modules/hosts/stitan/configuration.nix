@@ -20,12 +20,9 @@
       ...
     }:
     {
+      # TODO : system modules
       imports = [
-        inputs.lanzaboote.nixosModules.lanzaboote
-        inputs.nix-ld.nixosModules.nix-ld
-
-        self.nixosModules.base
-        self.nixosModules.bootsb
+        self.nixosModules.profile-minimal
         self.nixosModules.stitanNvidia390
 
         self.nixosModules.CommunCeph
@@ -49,9 +46,7 @@
         # defaultGateway = "192.168.1.254";
       };
 
-      # boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_18;
-      # services.qemuGuest.enable = true;
-
+      # TODO : user groups
       users.users.stitan = {
         name = "stitan";
         shell = pkgs.fish;
@@ -66,7 +61,7 @@
           "pipewire"
           "networkmanager"
           "systemd-journal"
-          "docker"
+          "podman"
           "kvm"
           "libvirtd"
           "ceph"
