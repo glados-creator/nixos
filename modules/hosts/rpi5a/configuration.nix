@@ -8,7 +8,6 @@
   flake.nixosConfigurations.rpi5a = inputs.nixos-raspberrypi.lib.nixosSystem {
     specialArgs = { inherit inputs; };
     modules = [
-      inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.base
       self.nixosModules.rpi5aConfig
     ];
   };
@@ -25,15 +24,13 @@
       imports = [
         self.nixosModules.profile-minimal-rpi
         self.nixosModules.rpi5Disko
-        self.nixosModules.CommunCeph
         self.nixosModules.k3s
+        self.nixosModules.k3s-rpi5a-server
         self.nixosModules.tailscale
-        # the module exported by this host's hardware-configuration.nix (fileSystems etc.)
-        # self.nixosModules.rpi5aHardware
+        self.nixosModules.rpi5aDesktop
       ];
       # networking wake on lan
 
-      # TODO : user groups 
       users.users.rpi5a = {
         shell = pkgs.fish;
         name = "rpi5a";

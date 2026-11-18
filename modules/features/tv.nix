@@ -14,8 +14,8 @@
     }:
     {
       environment.systemPackages = with pkgs; [
-    libcec
-    v4l-utils # cec-ctl
-  ];
+        libcec
+        v4l-utils # cec-ctl
+      ];
     };
 }

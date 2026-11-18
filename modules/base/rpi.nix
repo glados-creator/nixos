@@ -8,9 +8,9 @@
     { pkgs, lib, ... }:
     {
       boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
-      boot.loader.raspberryPi.bootloader = "kernel"; # Use direct kernel boot
       # Ensure NVMe is available in initrd (the module usually adds this, but good to verify)
       # boot.initrd.availableKernelModules = [ "nvme" ];
+      nixpkgs.hostPlatform = lib.mkForce "aarch64-linux";
 
       users.groups = {
         gpio = { };

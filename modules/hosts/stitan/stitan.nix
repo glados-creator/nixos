@@ -90,7 +90,7 @@
           # Basic Home Manager settings
           home.username = "stitan";
           home.homeDirectory = "/home/stitan";
-          home.stateVersion = "26.05";
+          home.stateVersion = "26.11";
           home.enableNixpkgsReleaseCheck = false;
           nixpkgs.config.allowUnfree = true;
 

@@ -6,7 +6,7 @@
 {
   # Shared disk layout for jupiter (512 GB NVMe):
   #   1G FAT firmware | 24G swap | 250G LVM (root) | 64G home
-  flake.nixosModules.jupiterDisko =
+  flake.nixosModules.stitanDisko =
     { lib, ... }:
     {
       imports = [ inputs.disko.nixosModules.disko ];

@@ -29,7 +29,7 @@
           # Basic Home Manager settings
           home.username = "glados";
           home.homeDirectory = "/home/glados";
-          home.stateVersion = "26.05";
+          home.stateVersion = "26.11";
           home.enableNixpkgsReleaseCheck = false;
           nixpkgs.config.allowUnfree = true;
 
@@ -116,6 +116,6 @@
           };
 
         };
-          
+
     };
 }

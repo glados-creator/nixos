@@ -35,9 +35,8 @@
         self.nixosModules.rdp
         # self.nixosModules.VR
 
-        self.nixosModules.JupiterGladosDesktop
+        self.nixosModules.JupiterDesktop
         self.nixosModules.JupiterGladosHome
-        self.nixosModules.JupiterGuestDesktop
         self.nixosModules.JupiterGuestHome
       ];
 
@@ -49,12 +48,6 @@
           wakeOnLan.enable = true;
         };
         # defaultGateway = "192.168.1.254";
-      };
-
-      services.logind.settings.Login = {
-        HandlePowerKey = "hibernate";
-        IdleAction = "hibernate";
-        IdleActionSec = "30min";
       };
 
       users.users.glados = {
@@ -75,6 +68,20 @@
           "kvm"
           "libvirtd"
           "ceph"
+        ];
+      };
+
+      users.users.guest = {
+        shell = pkgs.fish;
+        name = "guest";
+        isNormalUser = true;
+        createHome = true;
+        extraGroups = [
+          "audio"
+          "video"
+          "input"
+          "render"
+          "pipewire"
         ];
       };
     };

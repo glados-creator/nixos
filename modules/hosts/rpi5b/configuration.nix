@@ -8,7 +8,6 @@
   flake.nixosConfigurations.rpi5b = inputs.nixos-raspberrypi.lib.nixosSystem {
     specialArgs = { inherit inputs; };
     modules = [
-      inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.base
       self.nixosModules.rpi5bConfig
     ];
   };
@@ -25,9 +24,10 @@
       imports = [
         self.nixosModules.profile-minimal-rpi
         self.nixosModules.rpi5Disko
-        self.nixosModules.CommunCeph
         self.nixosModules.k3s
+        self.nixosModules.k3s-rpi5b-server
         self.nixosModules.tailscale
+        self.nixosModules.rpi5bDesktop
         # the module exported by this host's hardware-configuration.nix (fileSystems etc.)
         # self.nixosModules.rpi5bHardware
       ];

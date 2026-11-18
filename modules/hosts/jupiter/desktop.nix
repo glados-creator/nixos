@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.nixosModules.JupiterGladosDesktop =
+  flake.nixosModules.JupiterDesktop =
     {
       config,
       pkgs,
@@ -13,7 +13,7 @@
       ...
     }:
     {
-            # security.pam.loginLimits = [
+      # security.pam.loginLimits = [
       #   { domain = "@audio"; type = "-"; item = "rtprio";  value = "95"; }
       #   { domain = "@audio"; type = "-"; item = "memlock"; value = "unlimited"; }
       #   { domain = "@audio"; type = "-"; item = "nice";    value = "-19"; }
@@ -21,6 +21,7 @@
 
       # Enable SDDM ~kde plasma login manager~ as display manager
       services.displayManager.sddm.enable = true;
+      services.displayManager.sddm.wayland.enable = true;
       services.displayManager.plasma-login-manager.enable = false;
       services.displayManager.defaultSession = lib.mkForce "plasma"; # Default to Plasma
       services.xserver.wacom.enable = true; # wacom graphical tablet support
@@ -54,7 +55,7 @@
       # Additional packages for Wine support
       environment.systemPackages = with pkgs; [
         xf86-input-wacom
-        kdePackages.wacomtablet
+
         winetricks # Helper scripts for Wine
         # For better compatibility
         dxvk # DirectX to Vulkan translation

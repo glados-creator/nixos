@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.nixosModules.k3sserver =
+  flake.nixosModules.k3s-rpi5a-server =
     {
       config,
       pkgs,

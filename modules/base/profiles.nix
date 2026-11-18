@@ -20,9 +20,7 @@ in
       nm.install
       nm.bootsb
       nm.bus
-      nm.apps
       nm.network
-      nm.virt
     ];
   };
 
@@ -34,6 +32,8 @@ in
       nm.audio
       nm.bluetooth
       nm.printing
+      nm.apps
+      nm.install-full
     ];
   };
 

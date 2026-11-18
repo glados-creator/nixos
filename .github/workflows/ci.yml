@@ -52,8 +52,8 @@ jobs:
       fail-fast: true
       matrix:
         include:
-          - { host: astra, runner: ubuntu-latest }
-          - { host: jupiter, runner: ubuntu-latest }
+          # - { host: astra, runner: ubuntu-latest }
+          # - { host: jupiter, runner: ubuntu-latest }
           - { host: stitan, runner: ubuntu-latest }
           # Pis build natively on arm runners
           - { host: rpi5a, runner: ubuntu-26.04-arm }

@@ -9,6 +9,9 @@ sudo nix flake update /etc/nixos
 # Or with experimental features if needed:
 sudo nix flake update /etc/nixos --extra-experimental-features "nix-command flakes"
 
+# build
+nix build .#nixosConfigurations.astra.config.system.build.toplevel --dry-run
+
 # Dry run - show what would be built/downloaded
 sudo nixos-rebuild dry-build --flake /etc/nixos#astra
 

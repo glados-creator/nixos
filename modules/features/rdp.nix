@@ -14,20 +14,20 @@
     {
       environment.systemPackages = with pkgs; [
         # ---------- SPICE clients ----------
-        virt-viewer        # remote-viewer (standalone SPICE/VNC)
-        spice-gtk          # SPICE GTK client library + tools
-        virt-manager       # VM manager with built-in SPICE console
+        virt-viewer # remote-viewer (standalone SPICE/VNC)
+        spice-gtk # SPICE GTK client library + tools
+        virt-manager # VM manager with built-in SPICE console
 
         # ---------- RDP clients ----------
-        kdePackages.krdc   # KDE Remote Desktop Client (needs freerdp)
-        freerdp            # xfreerdp CLI + runtime dep for KRDC
-        remmina            # GTK multi-protocol client (RDP/VNC/SPICE)
+        kdePackages.krdc # KDE Remote Desktop Client (needs freerdp)
+        freerdp # xfreerdp CLI + runtime dep for KRDC
+        remmina # GTK multi-protocol client (RDP/VNC/SPICE)
 
         # ---------- Streaming / remote tools ----------
-        sunshine           # GameStream server (used by its service below)
-        moonlight-qt       # GameStream client
-        localsend          # LAN file transfer
-        rustdesk           # Remote desktop client
+        sunshine # GameStream server (used by its service below)
+        moonlight-qt # GameStream client
+        localsend # LAN file transfer
+        rustdesk # Remote desktop client
       ];
 
       # ============================================================
@@ -53,7 +53,7 @@
       # If you want to *serve* SPICE (i.e. host VMs you can connect to with
       # remote-viewer), you need libvirt + QEMU. VMs created with a SPICE
       # display will expose SPICE on a local port that QEMU serves.
-      import = [ self.nixosModules.qemu ];
+      imports = [ self.nixosModules.qemu ];
       # virtualisation.libvirtd.enable = true;
       # virtualisation.libvirtd.qemu.package = pkgs.qemu_kvm;
 

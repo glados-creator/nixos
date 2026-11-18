@@ -45,8 +45,9 @@
           # lock session after 20 min
           IdleAction = "lock";
           IdleActionSec = 1200; # 20 minutes in seconds        };
-      };
+        };
 
+      };
       xdg.portal = {
         enable = true;
         xdgOpenUsePortal = true;

@@ -29,7 +29,7 @@
           # Basic Home Manager settings
           home.username = "guest";
           home.homeDirectory = "/home/guest";
-          home.stateVersion = "26.05";
+          home.stateVersion = "26.11";
           home.enableNixpkgsReleaseCheck = false;
           nixpkgs.config.allowUnfree = true;
 
@@ -45,7 +45,7 @@
 
             waydroid
             waydroid-nftables
-            
+
             # Gaming / Windows compatibility
             steam
             wine-wayland
@@ -62,7 +62,6 @@
             bottles # windows ?
             vulkan-loader
 
-
             # Media / creative
             krita
             gimp
@@ -77,6 +76,6 @@
           services.blueman-applet.enable = true;
           programs.mangohud.enable = true;
         };
-          
+
     };
 }

@@ -37,9 +37,8 @@
         self.nixosModules.rdp
         self.nixosModules.VR
 
-        self.nixosModules.AstraGladosDesktop
+        self.nixosModules.AstraDesktop
         self.nixosModules.AstraGladosHome
-        self.nixosModules.AstraGuestDesktop
         self.nixosModules.AstraGuestHome
       ];
 
@@ -71,6 +70,20 @@
           "kvm"
           "libvirtd"
           "ceph"
+        ];
+      };
+
+      users.users.guest = {
+        shell = pkgs.fish;
+        name = "guest";
+        isNormalUser = true;
+        createHome = true;
+        extraGroups = [
+          "audio"
+          "video"
+          "input"
+          "render"
+          "pipewire"
         ];
       };
     };

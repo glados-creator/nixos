@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.nixosModules.k3sserver =
+  flake.nixosModules.k3s-rpi5b-server =
     {
       config,
       pkgs,
@@ -16,11 +16,10 @@
       services.k3s = {
         enable = true;
         role = lib.mkForce "server";
-        serverAddr = lib.mkForce ""; # "https://${controlPlaneIP}:6443";
-        token = lib.mkForce ""; # clusterToken;
+        serverAddr = "https://192.168.1.24:6443";
+        tokenFile = "/etc/k3s/token";
         nodeName = config.networking.hostName;
         extraFlags = [
-          "--cluster-init"
           "--node-label=server=true"
           # "--node-label=agent=true"
         ];
