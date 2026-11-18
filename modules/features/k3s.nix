@@ -9,16 +9,21 @@
       config,
       pkgs,
       lib,
-      stdenv,
       ...
     }:
     let
       # Your cluster's control plane address
-      controlPlaneIP = "192.168.1.14";
-      # Your actual server token (from /var/lib/rancher/k3s/server/token on the server)
-      clusterToken = (builtins.readFile ./k3s_token.crt);
+      controlPlaneIP = "192.168.1.24";
     in
     {
+      imports = [
+        self.nixosModules.Ceph
+      ];
+
+      environment.variables = {
+        KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
+      };
+
       environment.systemPackages = with pkgs; [
         k3s
         etcd
@@ -29,9 +34,11 @@
         kubevirt
         kubectl
         k9s
+        cri-tools # crictl
+        crun
       ];
 
-      # Essential firewall configuration for cluster communication
+      # Agent node: only what workers need
       networking.firewall = {
         enable = true;
         allowedTCPPorts = [
@@ -46,16 +53,15 @@
           4789 # Calico VXLAN
         ];
       };
-      # services.k3s.enable = false;
 
       services.k3s = {
         enable = true;
         role = "agent";
         serverAddr = "https://${controlPlaneIP}:6443";
-        token = clusterToken;
+        # Keep the token out of /nix/store: create this file by hand (or via sops-nix)
+        tokenFile = "/etc/k3s/token";
         nodeName = config.networking.hostName;
         extraFlags = [
-          # "--cluster-init"
           "--disable=traefik"
           "--disable=helm-controller"
           "--flannel-backend=none"
@@ -64,33 +70,28 @@
           "--disable=metrics-server"
           "--kubelet-arg=--fail-swap-on=false"
           "--kube-proxy-arg=--proxy-mode=nftables"
-          # "--node-label=server=true"
           "--node-label=agent=true"
-          # "--kubelet-arg=--masquerade-all=true"
+          "--container-runtime-endpoint=unix:///var/run/crio/crio.sock"
+          "--kubelet-arg=cgroup-driver=systemd"
         ];
       };
 
-      # systemd.tmpfiles.rules = [
-      #   # DELETE Volatile State (Run on every boot)
-      #   # "D! /etc/rancher/k3s 0755 root root -"
-      #   # "D! /etc/rancher/node 0755 root root -"
-      #   # "D! /var/lib/kubelet 0755 root root -"
-      #   # "D! /var/lib/longhorn 0755 root root -"
-      #   # "D! /var/lib/etcd 0755 root root -"
-      #   # "D! /var/lib/cni 0755 root root -"
-      #   # "D! /var/lib/rancher/k3s/data 0755 root root -"
-      #   # "D! /var/lib/rancher/k3s/storage 0755 root root -"
-      #   # "D! /var/lib/rancher/k3s/agent/ 0755 root root -"
-      # ];
+      # k3s must start after CRI-O
+      systemd.services.k3s = {
+        after = [ "crio.service" ];
+        requires = [ "crio.service" ];
+      };
 
+      # Standard CNI plugins. Calico's own binaries (calico, calico-ipam)
+      # are written to /opt/cni/bin by its install-cni container.
       systemd.tmpfiles.rules = [
         "C+ /opt/cni/bin/bandwidth - - - - ${pkgs.cni-plugins}/bin/bandwidth"
         "C+ /opt/cni/bin/bridge - - - - ${pkgs.cni-plugins}/bin/bridge"
         "C+ /opt/cni/bin/dhcp - - - - ${pkgs.cni-plugins}/bin/dhcp"
         "C+ /opt/cni/bin/dummy - - - - ${pkgs.cni-plugins}/bin/dummy"
         "C+ /opt/cni/bin/firewall - - - - ${pkgs.cni-plugins}/bin/firewall"
-        "C+ /opt/cni/bin/host-device - - - - ${pkgs.cni-plugins}/bin/host"
-        "C+ /opt/cni/bin/host-local - - - - ${pkgs.cni-plugins}/bin/host"
+        "C+ /opt/cni/bin/host-device - - - - ${pkgs.cni-plugins}/bin/host-device"
+        "C+ /opt/cni/bin/host-local - - - - ${pkgs.cni-plugins}/bin/host-local"
         "C+ /opt/cni/bin/ipvlan - - - - ${pkgs.cni-plugins}/bin/ipvlan"
         "C+ /opt/cni/bin/loopback - - - - ${pkgs.cni-plugins}/bin/loopback"
         "C+ /opt/cni/bin/macvlan - - - - ${pkgs.cni-plugins}/bin/macvlan"
@@ -114,49 +115,58 @@
         "net.ipv4.conf.default.rp_filter" = 2;
       };
 
-      # environment.etc."cni/net.d/00-multus.conf" = {
-      #   text = ''
-      #     {
-      #       "capabilities": {
-      #         "portMappings": true
-      #       },
-      #       "cniVersion": "0.3.1",
-      #       "logLevel": "verbose",
-      #       "logToStderr": true,
-      #       "name": "multus-cni-network",
-      #       "clusterNetwork": "/host/etc/cni/net.d/10-calico.conflist",
-      #       "type": "multus-shim"
-      #     }
-      #   '';
-      # };
+      virtualisation.cri-o.enable = true;
 
-      environment.etc."rancher/k3s/registries.yaml" = {
-        text = ''
-          mirrors:
-            docker.io:
-              endpoint:
-                - "http://harbor.main.home/docker"
-            ghcr.io:
-              endpoint:
-                - "http://harbor.main.home/ghcr"
-            quay.io:
-              endpoint:
-                - "http://harbor.main.home/quay"
-            codeberg.org:
-              endpoint:
-                - "http://harbor.main.home/codeberg"
-            lscr.io:
-              endpoint:
-                - "http://harbor.main.home/lscr"
-          configs:
-            "harbor.main.home":
-              auth:
-                username: <username>
-                password: <Password>
-              tls:
-                insecure_skip_verify: true
-        '';
-      };
+      # k3s's registries.yaml is ignored with external CRI-O, so mirrors are
+      # defined here. Harbor credentials go in /etc/containers/auth.json
+      # or in imagePullSecrets, not in Nix.
+      # nixpkgs' containers module only has the deprecated v1 options on this pin,
+      # so write a v2 registries.conf (with Harbor mirrors) ourselves.
+      environment.etc."containers/registries.conf".source = lib.mkForce (
+        (pkgs.formats.toml { }).generate "registries.conf" {
+          unqualified-search-registries = [ "docker.io" ];
+          registry =
+            lib.mapAttrsToList
+              (reg: project: {
+                prefix = reg;
+                location = reg;
+                mirror = [
+                  {
+                    location = "harbor.main.home/${project}";
+                    insecure = true;
+                  }
+                ];
+              })
+              {
+                "docker.io" = "docker";
+                "ghcr.io" = "ghcr";
+                "quay.io" = "quay";
+                "codeberg.org" = "codeberg";
+                "lscr.io" = "lscr";
+              };
+        }
+      );
 
+      environment.etc."crio/crio.conf.d/10-k3s.conf".text = ''
+        [crio]
+        root = "/var/lib/crio"
+
+        [crio.image]
+        global_auth_file = "/etc/crio/auth.json"
+
+        [crio.runtime]
+        default_runtime = "crun"
+        cgroup_manager = "systemd"
+        conmon_cgroup = "pod"
+
+        [crio.runtime.runtimes.crun]
+        runtime_path = "${pkgs.crun}/bin/crun"
+        runtime_type = "oci"
+        runtime_root = "/run/crun"
+
+        [crio.network]
+        network_dir = "/etc/cni/net.d/"
+        plugin_dirs = ["/opt/cni/bin"]
+      '';
     };
 }

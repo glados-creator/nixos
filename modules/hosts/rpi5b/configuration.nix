@@ -32,7 +32,7 @@
         # self.nixosModules.rpi5bHardware
       ];
 
-      networking.hostName = "rpi5b";
+      # networking wake on lan
 
       # TODO : user groups
       users.users.rpi5b = {

@@ -22,29 +22,30 @@
     {
 
       imports = [
-        inputs.lanzaboote.nixosModules.lanzaboote
-        inputs.nix-ld.nixosModules.nix-ld
-
-        self.nixosModules.base
-        self.nixosModules.bootsb
+        self.nixosModules.profile-full
+        self.nixosModules.jupiterDisko
         self.nixosModules.jupiterNvidia580
 
-        self.nixosModules.CommunCeph
-        self.nixosModules.k3s
         self.nixosModules.k3sGpu
+        self.nixosModules.podman
+        self.nixosModules.qemu
+        self.nixosModules.printing
+        self.nixosModules.shell
         self.nixosModules.tailscale
         self.nixosModules.rdp
         # self.nixosModules.VR
 
-        self.nixosModules.gladosDesktop
-        self.nixosModules.jupiterHome
+        self.nixosModules.JupiterGladosDesktop
+        self.nixosModules.JupiterGladosHome
+        self.nixosModules.JupiterGuestDesktop
+        self.nixosModules.JupiterGuestHome
       ];
 
       networking = {
         hostName = "jupiter";
         networkmanager.enable = true;
         interfaces.enp5s0 = {
-          useDHCP = false;
+          useDHCP = true;
           wakeOnLan.enable = true;
         };
         # defaultGateway = "192.168.1.254";
@@ -70,7 +71,7 @@
           "pipewire"
           "networkmanager"
           "systemd-journal"
-          "docker"
+          "podman"
           "kvm"
           "libvirtd"
           "ceph"

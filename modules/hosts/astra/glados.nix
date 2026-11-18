@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.nixosModules.astragladosHome =
+  flake.nixosModules.AstraGladosHome =
     {
       config,
       pkgs,
@@ -63,6 +63,15 @@
             winetricks
             lutris
             heroic
+            dxvk # DirectX to Vulkan translation
+            vkd3d # DirectX 12 to Vulkan translation
+            vkd3d-proton
+            vkbasalt-cli
+            gamescope # Gaming compositor
+            mangohud # Performance overlay
+            goverlay # mangohud gui config
+            bottles # windows ?
+            vulkan-loader
 
             # Media / creative
             blender

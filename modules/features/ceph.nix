@@ -5,15 +5,18 @@
 }:
 {
   flake.nixosModules.Ceph =
+    { config, pkgs, lib, ... }:
+    let
+      kver = config.boot.kernelPackages.kernel.modDirVersion;
+      kmods = "/run/booted-system/kernel-modules/lib/modules/${kver}";
+    in
+    {
+      boot.kernelModules = [ "rbd" "ceph" "libceph" ];
 
-    {
-      config,
-      pkgs,
-      lib,
-      stdenv,
-      ...
-    }:
-    {
+      systemd.tmpfiles.rules = [
+        "C+ /lib/modules/${kver} - - - - ${config.system.modulesTree}/lib/modules/${kver}"
+      ];
+
       environment.systemPackages = with pkgs; [
         ceph
         ceph-csi

@@ -53,6 +53,18 @@
           "ext4"
           # "xfs"
         ];
+        # boot.initrd.availableKernelModules	Stage 1 (initrd) for root
+        # boot.initrd.kernelModules	Stage 1 (initrd) for booting
+        # boot.kernelModules	Stage 2 (main system)
+        initrd.availableKernelModules = [
+          "nvme"
+          "dm_mod" # device map
+          "dm-snapshot"
+          "ahci" # sata controler
+          "sd_mod" # scsi / sata driver
+        ];
       };
+      hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+      hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     };
 }

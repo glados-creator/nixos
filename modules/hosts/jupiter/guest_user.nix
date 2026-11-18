@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.nixosModules.jupiterguestHome =
+  flake.nixosModules.JupiterGuestHome =
     {
       config,
       pkgs,
@@ -45,13 +45,22 @@
 
             waydroid
             waydroid-nftables
-
+            
             # Gaming / Windows compatibility
             steam
             wine-wayland
             winetricks
             lutris
             heroic
+            dxvk # DirectX to Vulkan translation
+            vkd3d # DirectX 12 to Vulkan translation
+            vkd3d-proton
+            vkbasalt-cli
+            gamescope # Gaming compositor
+            mangohud # Performance overlay
+            goverlay # mangohud gui config
+            bottles # windows ?
+            vulkan-loader
 
 
             # Media / creative

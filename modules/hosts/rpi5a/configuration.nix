@@ -31,6 +31,7 @@
         # the module exported by this host's hardware-configuration.nix (fileSystems etc.)
         # self.nixosModules.rpi5aHardware
       ];
+      # networking wake on lan
 
       # TODO : user groups 
       users.users.rpi5a = {

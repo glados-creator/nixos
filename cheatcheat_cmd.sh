@@ -26,3 +26,11 @@ sudo nixos-rebuild switch --flake /etc/nixos#astra
 
 # 6. Clean up old generations if needed
 sudo nix-collect-garbage -d
+
+# tv controle
+cec-ctl -d /dev/cec0 -S
+
+# switch input
+cec-ctl -d /dev/cec0 --active-source phys-addr=3.0.0.0
+# standby
+cec-ctl -d /dev/cec0 --to 0 --standby

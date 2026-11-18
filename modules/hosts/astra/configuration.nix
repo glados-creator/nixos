@@ -24,38 +24,33 @@
     }:
     {
       imports = [
-        inputs.lanzaboote.nixosModules.lanzaboote
-        inputs.nix-ld.nixosModules.nix-ld
-
-        self.nixosModules.base
-        self.nixosModules.bootsb
+        self.nixosModules.profile-full
+        self.nixosModules.astraHardware # TODO : switch to disko
         self.nixosModules.nvidia-latest
 
-        self.nixosModules.CommunCeph
-        self.nixosModules.k3s
         self.nixosModules.k3sGpu
+        self.nixosModules.podman
+        self.nixosModules.qemu
+        self.nixosModules.printing
+        self.nixosModules.shell
         self.nixosModules.tailscale
         self.nixosModules.rdp
         self.nixosModules.VR
 
-        self.nixosModules.gladosDesktop
-        self.nixosModules.gladosHome
+        self.nixosModules.AstraGladosDesktop
+        self.nixosModules.AstraGladosHome
+        self.nixosModules.AstraGuestDesktop
+        self.nixosModules.AstraGuestHome
       ];
 
       networking = {
         hostName = "astra";
         networkmanager.enable = true;
         interfaces.enp6s0 = {
-          useDHCP = false;
+          useDHCP = true;
           wakeOnLan.enable = true;
         };
         # defaultGateway = "192.168.1.254";
-      };
-
-      services.logind.settings.Login = {
-        HandlePowerKey = "hibernate";
-        IdleAction = "hibernate";
-        IdleActionSec = "30min";
       };
 
       users.users.glados = {
@@ -72,7 +67,7 @@
           "pipewire"
           "networkmanager"
           "systemd-journal"
-          "docker"
+          "podman"
           "kvm"
           "libvirtd"
           "ceph"
