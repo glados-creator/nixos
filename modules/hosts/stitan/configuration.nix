@@ -24,13 +24,14 @@
       imports = [
         self.nixosModules.profile-minimal
         self.nixosModules.stitanNvidia390
+        self.nixosModules.stitanDisko
 
-        self.nixosModules.CommunCeph
         self.nixosModules.k3s
-        self.nixosModules.k3sserver
+        self.nixosModules.k3s-stitan-server
         # self.nixosModules.k3sGpu
         self.nixosModules.tailscale
         self.nixosModules.rdp
+        self.nixosModules.slow-disk
 
         self.nixosModules.stitanDesktop
         self.nixosModules.stitanHome

@@ -25,7 +25,7 @@
 
       hardware.nvidia = {
         package = config.boot.kernelPackages.nvidiaPackages.legacy_580; # pkgs.linuxPackages.nvidiaPackages.stable;
-        powerManagement.enable = true;
+        powerManagement.enable = false;
         open = false;
         nvidiaSettings = true;
         modesetting.enable = true;
@@ -54,5 +54,10 @@
       ];
       hardware.nvidia-container-toolkit.enable = true;
       hardware.nvidia-container-toolkit.mount-nvidia-executables = true;
+
+      boot.kernelParams = [
+        "nvidia-drm.modeset=1"
+        "nvidia-drm.fbdev=1"
+      ];
     };
 }

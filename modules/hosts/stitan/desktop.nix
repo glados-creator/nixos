@@ -14,12 +14,32 @@
     }:
     {
       # PAM limits
-      security.pam.loginLimits = [
-        { domain = "@sddm"; type = "soft"; item = "rtprio"; value = "20"; }
-        { domain = "@sddm"; type = "soft"; item = "nice"; value = "-20"; }
-        { domain = "@pipewire"; type = "soft"; item = "rtprio"; value = "20"; }
-        { domain = "@pipewire"; type = "soft"; item = "nice";   value = "-20"; }
-      ];
+      # security.pam.loginLimits = [
+      #   {
+      #     domain = "@sddm";
+      #     type = "soft";
+      #     item = "rtprio";
+      #     value = "20";
+      #   }
+      #   {
+      #     domain = "@sddm";
+      #     type = "soft";
+      #     item = "nice";
+      #     value = "-20";
+      #   }
+      #   {
+      #     domain = "@pipewire";
+      #     type = "soft";
+      #     item = "rtprio";
+      #     value = "20";
+      #   }
+      #   {
+      #     domain = "@pipewire";
+      #     type = "soft";
+      #     item = "nice";
+      #     value = "-20";
+      #   }
+      # ];
 
       # # Enable SDDM ~kde plasma login manager~ as display manager
       # services.displayManager.sddm.enable = true;
@@ -75,7 +95,7 @@
       # Additional packages for Wine support
       environment.systemPackages = with pkgs; [
         xf86-input-wacom
-        kdePackages.wacomtablet
+
         # winetricks # Helper scripts for Wine
         # wineWow64Packages.wayland # Wine with Wayland support
         # For better compatibility

@@ -13,6 +13,9 @@
       lib,
       ...
     }:
+    let
+      isX86 = pkgs.stdenv.hostPlatform.isx86_64;
+    in
     {
       # nix version
       system.stateVersion = "26.05";
@@ -32,11 +35,9 @@
       nix.gc.automatic = true;
       # compact duplicate config files
       nix.settings.auto-optimise-store = true;
-      # nix.settings.auto-allocate-uids = true;
-      # nix.settings.allow-import-from-derivation = true; # nixos impure mode
-      # nix.settings.pure-eval = false;  # sorry nixos
       # enable zram
       zramSwap.enable = true;
+      nixpkgs.hostPlatform = "x86_64-linux";
       boot = {
         kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
         kernelParams = [
@@ -51,20 +52,26 @@
         supportedFilesystems = [
           "nfs"
           "ext4"
-          # "xfs"
         ];
-        # boot.initrd.availableKernelModules	Stage 1 (initrd) for root
-        # boot.initrd.kernelModules	Stage 1 (initrd) for booting
-        # boot.kernelModules	Stage 2 (main system)
+        # boot.initrd.availableKernelModules  Stage 1 (initrd) for root
+        # boot.initrd.kernelModules           Stage 1 (initrd) for booting
+        # boot.kernelModules                  Stage 2 (main system)
         initrd.availableKernelModules = [
           "nvme"
           "dm_mod" # device map
           "dm-snapshot"
-          "ahci" # sata controler
+          "ahci" # sata controller
           "sd_mod" # scsi / sata driver
         ];
+        initrd.services.lvm.enable = true;
       };
-      hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-      hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+      # x86 only
+      hardware.cpu.amd.updateMicrocode = lib.mkIf isX86 (
+        lib.mkDefault config.hardware.enableRedistributableFirmware
+      );
+      hardware.cpu.intel.updateMicrocode = lib.mkIf isX86 (
+        lib.mkDefault config.hardware.enableRedistributableFirmware
+      );
     };
 }

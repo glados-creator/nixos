@@ -34,12 +34,15 @@
         self.nixosModules.tailscale
         self.nixosModules.rdp
         # self.nixosModules.VR
+        self.nixosModules.waydroid
 
-        self.nixosModules.JupiterGladosDesktop
+        self.nixosModules.JupiterDesktop
         self.nixosModules.JupiterGladosHome
-        self.nixosModules.JupiterGuestDesktop
         self.nixosModules.JupiterGuestHome
       ];
+
+      boot.kernelModules = [ "nct6775" ];
+      boot.kernelParams = [ "acpi_enforce_resources=lax" ];
 
       networking = {
         hostName = "jupiter";
@@ -49,12 +52,6 @@
           wakeOnLan.enable = true;
         };
         # defaultGateway = "192.168.1.254";
-      };
-
-      services.logind.settings.Login = {
-        HandlePowerKey = "hibernate";
-        IdleAction = "hibernate";
-        IdleActionSec = "30min";
       };
 
       users.users.glados = {
@@ -75,6 +72,20 @@
           "kvm"
           "libvirtd"
           "ceph"
+        ];
+      };
+
+      users.users.guest = {
+        shell = pkgs.fish;
+        name = "guest";
+        isNormalUser = true;
+        createHome = true;
+        extraGroups = [
+          "audio"
+          "video"
+          "input"
+          "render"
+          "pipewire"
         ];
       };
     };

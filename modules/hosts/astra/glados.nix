@@ -26,10 +26,13 @@
           ...
         }:
         {
+          imports = [
+            self.homeModules.shell
+          ];
           # Basic Home Manager settings
           home.username = "glados";
           home.homeDirectory = "/home/glados";
-          home.stateVersion = "26.05";
+          home.stateVersion = "26.11";
           home.enableNixpkgsReleaseCheck = false;
           nixpkgs.config.allowUnfree = true;
 
@@ -53,9 +56,6 @@
             distrobox
             distroshelf
             wireshark
-
-            waydroid
-            waydroid-nftables
 
             # Gaming / Windows compatibility
             steam
@@ -82,10 +82,15 @@
             obs-studio
 
             # Office
-            libreoffice-stable
+            libreoffice
 
             cura-appimage
           ];
+
+          programs.btop = {
+            enable = true;
+            package = pkgs.btop-cuda;
+          };
 
           services.blueman-applet.enable = true;
           programs.mangohud.enable = true;
@@ -118,6 +123,6 @@
           };
 
         };
-          
+
     };
 }

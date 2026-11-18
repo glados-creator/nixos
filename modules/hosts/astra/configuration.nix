@@ -36,12 +36,15 @@
         self.nixosModules.tailscale
         self.nixosModules.rdp
         self.nixosModules.VR
+        self.nixosModules.waydroid
 
-        self.nixosModules.AstraGladosDesktop
+        self.nixosModules.AstraDesktop
         self.nixosModules.AstraGladosHome
-        self.nixosModules.AstraGuestDesktop
         self.nixosModules.AstraGuestHome
       ];
+
+      boot.kernelModules = [ "nct6775" ];
+      boot.kernelParams = [ "acpi_enforce_resources=lax" ];
 
       networking = {
         hostName = "astra";
@@ -71,6 +74,20 @@
           "kvm"
           "libvirtd"
           "ceph"
+        ];
+      };
+
+      users.users.guest = {
+        shell = pkgs.fish;
+        name = "guest";
+        isNormalUser = true;
+        createHome = true;
+        extraGroups = [
+          "audio"
+          "video"
+          "input"
+          "render"
+          "pipewire"
         ];
       };
     };

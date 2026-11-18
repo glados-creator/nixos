@@ -15,6 +15,14 @@ nix run github:nix-community/nixos-anywhere -- \
     --phases disko,install,reboot \
     # --disko-mode mount \
     --build-on remote
+
+sudo -i
+nix-hell -p util-linux coreutils
+nix --extra-experimental-features nix-command --extra-experimental-features flakes  run github:nix-community/disko/latest -- \
+  --mode destroy,format,mount --flake github:glados-creator/nixos#rpi5a
+
+nix --extra-experimental-features nix-command --extra-experimental-features flakes shell nixpkgs#nixos-install-tools -c \
+  nixos-install --flake github:glados-creator/nixos#rpi5a --root /mnt --no-root-passwd
 ```
 
 thanks to 

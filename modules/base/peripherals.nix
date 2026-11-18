@@ -36,7 +36,8 @@
         "pwm_fan"
       ];
     };
-  flake.nixosModules.peripherals-apps = {
+  flake.nixosModules.peripherals-apps =
+    {
       config,
       pkgs,
       lib,

@@ -5,8 +5,8 @@
 }:
 {
   # Shared disk layout for rpi5a (512 GB NVMe):
-  #   1G FAT firmware | 8G swap | 48G LVM (root) | rest raw (ceph OSD)
-  flake.nixosModules.rpi5Disko =
+  #   1G FAT firmware | 56G LVM (8G swap + 48G root) | rest raw (ceph OSD)
+  flake.nixosModules.rpi5aDisko =
     { lib, ... }:
     {
       imports = [ inputs.disko.nixosModules.disko ];
@@ -33,36 +33,39 @@
                   ];
                 };
               };
-              swap = {
-                priority = 2;
-                size = "8G";
-                content.type = "swap";
-              };
               lvm = {
-                priority = 3;
-                size = "48G";
+                priority = 2;
+                size = "56G";
                 content = {
                   type = "lvm_pv";
-                  vg = "vgrpi5";
+                  vg = "vgrpi5a";
                 };
               };
               # everything left over, untouched: hand it to Rook-Ceph as a raw device
               ceph = {
-                priority = 4;
+                priority = 3;
                 size = "100%";
               };
             };
           };
         };
 
-        lvm_vg.vgrpi5 = {
+        lvm_vg.vgrpi5a = {
           type = "lvm_vg";
-          lvs.rootfs = {
-            size = "100%FREE";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/";
+          lvs = {
+            swap = {
+              priority = 1; # created first so rootfs's 100%FREE doesn't eat it
+              size = "8G";
+              content.type = "swap";
+            };
+            rootfs = {
+              priority = 2;
+              size = "100%FREE";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/";
+              };
             };
           };
         };

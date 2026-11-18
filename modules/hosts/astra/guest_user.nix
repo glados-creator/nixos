@@ -26,10 +26,13 @@
           ...
         }:
         {
+          imports = [
+            self.homeModules.shell
+          ];
           # Basic Home Manager settings
           home.username = "guest";
           home.homeDirectory = "/home/guest";
-          home.stateVersion = "26.05";
+          home.stateVersion = "26.11";
           home.enableNixpkgsReleaseCheck = false;
           nixpkgs.config.allowUnfree = true;
 
@@ -42,9 +45,6 @@
             # prog
             distrobox
             distroshelf
-
-            waydroid
-            waydroid-nftables
 
             # Gaming / Windows compatibility
             steam
@@ -62,7 +62,6 @@
             bottles # windows ?
             vulkan-loader
 
-
             # Media / creative
             krita
             gimp
@@ -71,12 +70,15 @@
             obs-studio
 
             # Office
-            libreoffice-stable
+            libreoffice
           ];
-
+          programs.btop = {
+            enable = true;
+            package = pkgs.btop-cuda;
+          };
           services.blueman-applet.enable = true;
           programs.mangohud.enable = true;
         };
-          
+
     };
 }
