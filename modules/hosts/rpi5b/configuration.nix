@@ -33,7 +33,19 @@
         # self.nixosModules.rpi5bHardware
       ];
 
-      # networking wake on lan
+      networking = {
+        hostName = "rpi5a";
+        networkmanager.enable = true;
+        interfaces.eth0 = {
+          useDHCP = true;
+          wakeOnLan.enable = true;
+        };
+        interfaces.wlan0 = {
+          useDHCP = true;
+          wakeOnLan.enable = true;
+        };
+        # defaultGateway = "192.168.1.254";
+      };
 
       # TODO : user groups
       users.users.rpi5b = {

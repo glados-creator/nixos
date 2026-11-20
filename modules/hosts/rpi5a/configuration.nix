@@ -30,7 +30,20 @@
         self.nixosModules.tailscale
         self.nixosModules.rpi5aDesktop
       ];
-      # networking wake on lan
+      
+      networking = {
+        hostName = "rpi5a";
+        networkmanager.enable = true;
+        interfaces.eth0 = {
+          useDHCP = true;
+          wakeOnLan.enable = true;
+        };
+        interfaces.wlan0 = {
+          useDHCP = true;
+          wakeOnLan.enable = true;
+        };
+        # defaultGateway = "192.168.1.254";
+      };
 
       users.users.rpi5a = {
         shell = pkgs.fish;
