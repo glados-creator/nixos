@@ -34,11 +34,15 @@
         self.nixosModules.tailscale
         self.nixosModules.rdp
         # self.nixosModules.VR
+        self.nixosModules.waydroid
 
         self.nixosModules.JupiterDesktop
         self.nixosModules.JupiterGladosHome
         self.nixosModules.JupiterGuestHome
       ];
+
+      boot.kernelModules = [ "nct6775" ];
+      boot.kernelParams = [ "acpi_enforce_resources=lax" ];
 
       networking = {
         hostName = "jupiter";

@@ -4,7 +4,7 @@
   ...
 }:
 {
-  flake.nixosModules.tailscale =
+  flake.nixosModules.tv =
     {
       config,
       pkgs,

@@ -24,6 +24,7 @@
       imports = [
         self.nixosModules.profile-minimal-rpi
         self.nixosModules.rpi5Disko
+        self.nixosModules.tv
         self.nixosModules.k3s
         self.nixosModules.k3s-rpi5b-server
         self.nixosModules.tailscale

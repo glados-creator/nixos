@@ -62,17 +62,22 @@
         tokenFile = "/etc/k3s/token";
         nodeName = config.networking.hostName;
         extraFlags = [
-          "--disable=traefik"
-          "--disable=helm-controller"
-          "--flannel-backend=none"
-          "--disable-network-policy"
-          "--disable=servicelb"
-          "--disable=metrics-server"
+          "--node-name=astra"
           "--kubelet-arg=--fail-swap-on=false"
           "--kube-proxy-arg=--proxy-mode=nftables"
           "--node-label=agent=true"
           "--container-runtime-endpoint=unix:///var/run/crio/crio.sock"
           "--kubelet-arg=cgroup-driver=systemd"
+          "--node-label=nixos-nvidia-cdi=enabled"
+          "--node-label=gpu=true"
+        ]
+        ++ lib.optionals (config.services.k3s.role == "server") [
+          "--disable=traefik"
+          "--disable=helm-controller"
+          "--disable=servicelb"
+          "--disable=metrics-server"
+          "--disable-network-policy"
+          "--flannel-backend=none"
         ];
       };
 

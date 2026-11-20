@@ -75,4 +75,17 @@
         vscodium
       ];
     };
+      flake.nixosModules.waydroid =
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
+    {
+virtualisation.waydroid = {
+  enable = true;
+  package = pkgs.waydroid-nftables;
+};
+    };
 }

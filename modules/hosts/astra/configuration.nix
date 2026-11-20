@@ -36,11 +36,15 @@
         self.nixosModules.tailscale
         self.nixosModules.rdp
         self.nixosModules.VR
+        self.nixosModules.waydroid
 
         self.nixosModules.AstraDesktop
         self.nixosModules.AstraGladosHome
         self.nixosModules.AstraGuestHome
       ];
+
+      boot.kernelModules = [ "nct6775" ];
+      boot.kernelParams = [ "acpi_enforce_resources=lax" ];
 
       networking = {
         hostName = "astra";

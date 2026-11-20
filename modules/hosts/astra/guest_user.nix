@@ -26,6 +26,9 @@
           ...
         }:
         {
+          imports = [
+            self.homeModules.shell
+          ];
           # Basic Home Manager settings
           home.username = "guest";
           home.homeDirectory = "/home/guest";
@@ -42,9 +45,6 @@
             # prog
             distrobox
             distroshelf
-
-            waydroid
-            waydroid-nftables
 
             # Gaming / Windows compatibility
             steam
@@ -70,7 +70,7 @@
             obs-studio
 
             # Office
-            libreoffice-stable
+            libreoffice
           ];
 
           services.blueman-applet.enable = true;

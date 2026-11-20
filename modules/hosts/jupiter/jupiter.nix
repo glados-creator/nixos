@@ -26,6 +26,9 @@
           ...
         }:
         {
+          imports = [
+            self.homeModules.shell
+          ];
           # Basic Home Manager settings
           home.username = "glados";
           home.homeDirectory = "/home/glados";
@@ -54,9 +57,6 @@
             distroshelf
             wireshark
 
-            waydroid
-            waydroid-nftables
-
             # Gaming / Windows compatibility
             steam
             wine-wayland
@@ -70,6 +70,8 @@
             gamescope # Gaming compositor
             mangohud # Performance overlay
             goverlay # mangohud gui config
+            bottles # windows ?
+            vulkan-loader
 
             # Media / creative
             blender
@@ -80,7 +82,7 @@
             obs-studio
 
             # Office
-            libreoffice-stable
+            libreoffice
 
             cura-appimage
           ];

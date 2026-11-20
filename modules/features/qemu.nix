@@ -4,12 +4,28 @@
     key = "nixosModules.qemu";
     imports = [
       (
-        { config, pkgs, lib, ... }:
+        {
+          config,
+          pkgs,
+          lib,
+          ...
+        }:
         {
           programs.virt-manager.enable = true;
 
-          boot.kernelModules = [ "kvm" "vfio" "vfio_iommu_type1" "vfio_pci" "kvm-amd" "kvm-intel" ];
-          boot.kernelParams = [ "iommu=pt" "amd_iommu=on" "intel_iommu=on" ];
+          boot.kernelModules = [
+            "kvm"
+            "vfio"
+            "vfio_iommu_type1"
+            "vfio_pci"
+            "kvm-amd"
+            "kvm-intel"
+          ];
+          boot.kernelParams = [
+            "iommu=pt"
+            "amd_iommu=on"
+            "intel_iommu=on"
+          ];
 
           virtualisation = {
             libvirtd = {
