@@ -14,7 +14,7 @@
       disko.devices = {
         disk.nvme = {
           type = "disk";
-          device = "/dev/nvme0n1";
+          device = "/dev/disk/by-id/nvme-BIWIN_NV3500_512GB_2539086310539";
           content = {
             type = "gpt";
             partitions = {

@@ -17,12 +17,11 @@
         enable = true;
         role = lib.mkForce "server";
         serverAddr = lib.mkForce ""; # "https://${controlPlaneIP}:6443";
-        token = lib.mkForce ""; # clusterToken;
-        nodeName = config.networking.hostName;
+        # token = lib.mkForce null; # clusterToken;
+        # tokenFile = lib.mkForce null;
+        # nodeName = config.networking.hostName;
         extraFlags = [
           "--cluster-init"
-          "--node-label=server=true"
-          # "--node-label=agent=true"
         ];
       };
 

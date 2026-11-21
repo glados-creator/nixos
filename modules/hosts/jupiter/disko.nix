@@ -14,7 +14,7 @@
         disk = {
           main = {
             type = "disk";
-            device = "/dev/nvme0n1";
+            device = "/dev/disk/by-id/nvme-Patriot_M.2_P300_512GB_P300WCBA24090647503";
             content = {
               type = "gpt";
               partitions = {
@@ -46,7 +46,7 @@
 
           sda = {
             type = "disk";
-            device = "/dev/sda";
+            device = "/dev/disk/by-id/ata-WDC_WDS200T2B0A-00SM50_204223801686";
             content = {
               type = "gpt";
               partitions = {
@@ -60,7 +60,7 @@
 
           sdb = {
             type = "disk";
-            device = "/dev/sdb";
+            device = "/dev/disk/by-id/ata-GIGABYTE_GP-GSTFS31100TNTD_SN202308906817";
             content = {
               type = "gpt";
               partitions = {
@@ -74,7 +74,7 @@
 
           sdc = {
             type = "disk";
-            device = "/dev/sdc";
+            device = "/dev/disk/by-id/ata-TPH00402000GB_0_HLTEV024";
             content = {
               type = "gpt";
               partitions = {
@@ -88,7 +88,7 @@
 
           sdd = {
             type = "disk";
-            device = "/dev/sdd";
+            device = "/dev/disk/by-id/ata-WDC_WD20EZRX-00SPEB0_WD-WCC4E3CK662F";
             content = {
               type = "gpt";
               partitions = {
@@ -105,6 +105,7 @@
           type = "lvm_vg";
           lvs = {
             swap = {
+              priority = 1;
               size = "16G";
               content = {
                 type = "swap";
@@ -112,7 +113,8 @@
               };
             };
             rootfs = {
-              size = "384G";
+              priority = 3;
+              size = "100%FREE";
               content = {
                 type = "filesystem";
                 format = "ext4";
@@ -121,6 +123,7 @@
               };
             };
             homefs = {
+              priority = 2;
               size = "64G";
               content = {
                 type = "filesystem";

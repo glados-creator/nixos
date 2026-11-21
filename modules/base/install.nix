@@ -100,6 +100,8 @@
         clang_22
         graphviz
         gh
+        alacritty
+        bun
 
         networkmanagerapplet
 

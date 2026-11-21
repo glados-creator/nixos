@@ -6,8 +6,9 @@
     ];
   };
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs/staging-26.11";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/c93b0882c7def157c311ca297d30f18bc4e23e49";
+    # nixpkgs.url = "github:NixOS/nixpkgs/release-26.11";
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";

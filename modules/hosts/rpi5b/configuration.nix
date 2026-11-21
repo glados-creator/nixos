@@ -22,7 +22,7 @@
     {
       imports = [
         self.nixosModules.profile-minimal-rpi
-        self.nixosModules.rpi5Disko
+        self.nixosModules.rpi5bDisko
         self.nixosModules.tv
         self.nixosModules.k3s
         self.nixosModules.k3s-rpi5b-server

@@ -18,6 +18,17 @@
       ];
       boot.initrd.services.lvm.enable = true; # or boot.initrd.systemd + lvm, matching your setup
 
+      hardware.raspberry-pi.config = {
+        all = {
+          base-dt-params = {
+            cooling_fan = {
+              enable = true;
+              value = "on";
+            };
+          };
+        };
+      };
+
       users.groups = {
         gpio = { };
         i2c = { };
@@ -38,7 +49,7 @@
         pkgs.coreutils
       ];
 
-      boot.kernel.kernelParams = [
+      boot.kernelParams = [
         "cgroup_enable=cpuset"
         "cgroup_memory=1"
         "cgroup_enable=memory"

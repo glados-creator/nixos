@@ -14,7 +14,7 @@
       disko.devices = {
         disk.main = {
           type = "disk";
-          device = "/dev/sda";
+          device = "/dev/disk/by-id/ata-ST500DM002-1BD142_Z6EBYTAM";
           content = {
             type = "gpt";
             partitions = {
@@ -57,7 +57,7 @@
             };
             rootfs = {
               priority = 3;
-              size = "100%";
+              size = "100%FREE";
               content = {
                 type = "filesystem";
                 format = "ext4";
@@ -78,7 +78,7 @@
 
         disk.data = {
           type = "disk";
-          device = "/dev/sdb";
+          device = "/dev/disk/by-id/ata-ST8000DM004-2U9188_ZR15PPH9";
           content = {
             type = "gpt";
             partitions = {

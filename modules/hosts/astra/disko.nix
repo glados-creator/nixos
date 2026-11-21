@@ -106,6 +106,7 @@
           type = "lvm_vg";
           lvs = {
             swap = {
+              priority = 1;
               size = "16G";
               content = {
                 type = "swap";
@@ -113,7 +114,8 @@
               };
             };
             rootfs = {
-              size = "384G";
+              priority = 3;
+              size = "100%FREE";
               content = {
                 type = "filesystem";
                 format = "ext4";
@@ -122,6 +124,7 @@
               };
             };
             homefs = {
+              priority = 2;
               size = "64G";
               content = {
                 type = "filesystem";
