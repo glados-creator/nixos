@@ -28,6 +28,9 @@
         moonlight-qt # GameStream client
         localsend # LAN file transfer
         rustdesk # Remote desktop client
+
+        wayvnc
+        # vncserver
       ];
 
       # ============================================================
