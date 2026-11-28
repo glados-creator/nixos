@@ -46,14 +46,14 @@
           systemd.sockets = lib.genAttrs [
             "virtqemud" "virtnetworkd" "virtstoraged" "virtnodedevd" "virtlogd"
           ] (_: { wantedBy = [ "sockets.target" ]; });
-          systemd.services.virtnetworkd.path = [ 
+          systemd.services.virtnetworkd.path = with pkgs; [ 
               nftables
   dnsmasq
   iproute2
   iptables      # certains chemins de code l'appellent encore
   bridge-utils
            ];
-          systemd.services.libvirtd.path = [   nftables
+          systemd.services.libvirtd.path = with pkgs; [   nftables
   dnsmasq
   iproute2
   iptables      # certains chemins de code l'appellent encore
