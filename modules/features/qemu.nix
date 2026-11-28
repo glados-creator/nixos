@@ -27,6 +27,11 @@
             "intel_iommu=on"
           ];
 
+          boot.extraModprobeConfig = ''
+            options kvm_intel nested=1
+            options kvm_amd nested=1
+          '';
+
           virtualisation = {
             libvirtd = {
               enable = true;
@@ -37,6 +42,8 @@
             };
             spiceUSBRedirection.enable = true;
           };
+          systemd.tmpfiles.rules = [ "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware" ];
+          boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
           environment.systemPackages = [ pkgs.virt-manager ];
         }

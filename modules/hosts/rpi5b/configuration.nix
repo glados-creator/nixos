@@ -6,7 +6,7 @@
 {
   # Built with nixos-raspberrypi's nixosSystem (vendor kernel, own nixpkgs).
   flake.nixosConfigurations.rpi5b = inputs.nixos-raspberrypi.lib.nixosSystem {
-    specialArgs = { inherit inputs; };
+    specialArgs = { inherit (inputs) nixos-raspberrypi; };
     modules = [
       self.nixosModules.rpi5bConfig
     ];

@@ -7,6 +7,33 @@
   flake.nixosModules.pi-base =
     { pkgs, lib, ... }:
     {
+
+      imports = with nixos-raspberrypi.nixosModules; [
+        usb-gadget-ethernet # Configures USB Gadget/Ethernet - Ethernet emulation over USB
+# RPi5:
+  raspberry-pi-5.page-size-16k  # Optional memory optimization: use 16k pages instead of default 64k for jemalloc, saves memory, reduces fragmentation. May fix any issues caused by the memory page size discrepancy. May cause lots of rebuilds. (only for systems running default rpi5 (bcm2712) kernel with 16k memory page)
+  # use one of following for the "PrimaryGPU" configuration:
+  raspberry-pi-5.display-vc4  # "regular" display connected
+  raspberry-pi-5.display-rp1  # for RP1-connected (DPI/composite/MIPI DSI) display
+        raspberry-pi-5.bluetooth
+
+  # Required: Add necessary overlays with kernel, firmware, vendor packages
+  nixos-raspberrypi.lib.inject-overlays
+
+  # Binary cache with prebuilt packages for the currently locked `nixpkgs`,
+  # see `devshells/nix-build-to-cachix.nix` for a list
+  trusted-nix-caches
+
+  # Optional: All RPi and RPi-optimised packages to be available in `pkgs.rpi`
+  nixpkgs-rpi
+
+  # Optional: add overlays with optimised packages into the global scope
+  # provides: ffmpeg_{4,6,7}, kodi, libcamera, vlc, etc.
+  # This overlay may cause lots of rebuilds (however many
+  #  packages should be available from the binary cache)
+  nixos-raspberrypi.lib.inject-overlays-global
+      ];
+
       boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
       boot.loader.raspberry-pi.bootloader = "kernel";
       # Ensure NVMe is available in initrd (the module usually adds this, but good to verify)

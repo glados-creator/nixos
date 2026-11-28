@@ -37,7 +37,7 @@ in
     ];
   };
 
-  # Raspberry Pi 4/5: vendor kernel from nixos-raspberrypi, no cachyos, no GUI.
+  # Raspberry Pi 5: vendor kernel from nixos-raspberrypi, no cachyos, no GUI.
   flake.nixosModules.profile-minimal-rpi = {
     imports = [
       inputs.nixos-raspberrypi.nixosModules.raspberry-pi-5.base
