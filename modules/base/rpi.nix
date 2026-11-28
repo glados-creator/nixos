@@ -10,6 +10,7 @@
       rpi = inputs.nixos-raspberrypi;
     in
     {
+      # i use the latest kernel so i can't have any of the vendor things like the fan
       imports = with rpi.nixosModules; [
         usb-gadget-ethernet # Configures USB Gadget/Ethernet - Ethernet emulation over USB
         # RPi5:
@@ -20,7 +21,7 @@
         raspberry-pi-5.bluetooth
 
         # Required: Add necessary overlays with kernel, firmware, vendor packages
-        rpi.lib.inject-overlays
+        # rpi.lib.inject-overlays
 
         # Binary cache with prebuilt packages for the currently locked `nixpkgs`,
         # see `devshells/nix-build-to-cachix.nix` for a list
@@ -33,7 +34,8 @@
         # provides: ffmpeg_{4,6,7}, kodi, libcamera, vlc, etc.
         # This overlay may cause lots of rebuilds (however many
         #  packages should be available from the binary cache)
-        rpi.lib.inject-overlays-global
+        # rpi.lib.inject-overlays-global
+        # borken infinite recursion
       ];
 
       boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
