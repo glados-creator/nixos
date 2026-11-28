@@ -30,7 +30,7 @@
         rustdesk # Remote desktop client
 
         wayvnc
-        # vncserver
+        x11vnc
       ];
 
       # ============================================================
