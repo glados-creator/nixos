@@ -49,6 +49,7 @@
           systemd.services.virtnetworkd.path = [ pkgs.nftables pkgs.dnsmasq ];
           systemd.services.libvirtd.path = [ pkgs.nftables pkgs.dnsmasq ]; # monolithic mode
           # boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
+          environment.sessionVariables.LIBVIRT_DEFAULT_URI = "qemu:///system?socket=/run/libvirt/libvirt-sock";
 
           environment.systemPackages = [ pkgs.virt-manager ];
         }
