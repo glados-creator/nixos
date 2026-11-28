@@ -43,6 +43,11 @@
             spiceUSBRedirection.enable = true;
           };
           systemd.tmpfiles.rules = [ "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware" ];
+          systemd.sockets = lib.genAttrs [
+            "virtqemud" "virtnetworkd" "virtstoraged" "virtnodedevd" "virtlogd"
+          ] (_: { wantedBy = [ "sockets.target" ]; });
+          systemd.services.virtnetworkd.path = [ pkgs.nftables pkgs.dnsmasq ];
+          systemd.services.libvirtd.path = [ pkgs.nftables pkgs.dnsmasq ]; # monolithic mode
           boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
           environment.systemPackages = [ pkgs.virt-manager ];
