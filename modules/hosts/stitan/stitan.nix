@@ -26,9 +26,9 @@
           ...
         }:
         {
-          imports = [
-            self.homeModules.shell
-          ];
+          # imports = [
+          #   self.homeModules.shell
+          # ];
           # Basic Home Manager settings
           home.username = "stitan";
           home.homeDirectory = "/home/stitan";
