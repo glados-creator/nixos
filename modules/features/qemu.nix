@@ -44,10 +44,10 @@
             spiceUSBRedirection.enable = true;
           };
           # disable monolithic deamon
-          systemd.services.libvirtd.enable = lib.mkForce false;
-          systemd.sockets.libvirtd.enable = lib.mkForce false;
-          systemd.tmpfiles.rules = [ "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware" ];
-          systemd.sockets =
+          systemd = {
+            services.libvirtd.enable = lib.mkForce false;
+            sockets = {
+              libvirtd.enable = lib.mkForce false;
             lib.genAttrs
               [
                 "virtqemud"
@@ -59,6 +59,9 @@
               (_: {
                 wantedBy = [ "sockets.target" ];
               });
+            };
+          };
+          systemd.tmpfiles.rules = [ "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware" ];
           systemd.services.virtnetworkd.path = with pkgs; [
             nftables
             dnsmasq
