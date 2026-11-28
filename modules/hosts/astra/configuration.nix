@@ -72,6 +72,7 @@
           "systemd-journal"
           "podman"
           "kvm"
+          "libvirt" 
           "libvirtd"
           "ceph"
         ];
@@ -87,6 +88,7 @@
           "video"
           "input"
           "render"
+          "networkmanager"
           "pipewire"
         ];
       };

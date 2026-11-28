@@ -38,28 +38,43 @@
               qemu = {
                 package = pkgs.qemu_kvm;
                 swtpm.enable = true;
+                allowedBridges = [ "br0" ];
               };
             };
             spiceUSBRedirection.enable = true;
           };
+          # disable monolithic deamon
+          systemd.services.libvirtd.enable = lib.mkForce false;
+          systemd.sockets.libvirtd.enable = lib.mkForce false;
           systemd.tmpfiles.rules = [ "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware" ];
-          systemd.sockets = lib.genAttrs [
-            "virtqemud" "virtnetworkd" "virtstoraged" "virtnodedevd" "virtlogd"
-          ] (_: { wantedBy = [ "sockets.target" ]; });
-          systemd.services.virtnetworkd.path = with pkgs; [ 
-              nftables
-  dnsmasq
-  iproute2
-  iptables      # certains chemins de code l'appellent encore
-  bridge-utils
-           ];
-          systemd.services.libvirtd.path = with pkgs; [   nftables
-  dnsmasq
-  iproute2
-  iptables      # certains chemins de code l'appellent encore
-  bridge-utils ]; # monolithic mode
+          systemd.sockets =
+            lib.genAttrs
+              [
+                "virtqemud"
+                "virtnetworkd"
+                "virtstoraged"
+                "virtnodedevd"
+                "virtlogd"
+              ]
+              (_: {
+                wantedBy = [ "sockets.target" ];
+              });
+          systemd.services.virtnetworkd.path = with pkgs; [
+            nftables
+            dnsmasq
+            iproute2
+            iptables # certains chemins de code l'appellent encore
+            bridge-utils
+          ];
+          systemd.services.libvirtd.path = with pkgs; [
+            nftables
+            dnsmasq
+            iproute2
+            iptables # certains chemins de code l'appellent encore
+            bridge-utils
+          ]; # monolithic mode
           # boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
-          environment.sessionVariables.LIBVIRT_DEFAULT_URI = "qemu:///system?socket=/run/libvirt/libvirt-sock";
+          # environment.sessionVariables.LIBVIRT_DEFAULT_URI = "qemu:///system?socket=/run/libvirt/libvirt-sock";
 
           environment.systemPackages = [ pkgs.virt-manager ];
         }

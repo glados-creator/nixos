@@ -47,7 +47,6 @@
         # defaultGateway = "192.168.1.254";
       };
 
-      # TODO : user groups
       users.users.stitan = {
         name = "stitan";
         shell = pkgs.fish;
@@ -64,6 +63,7 @@
           "systemd-journal"
           "podman"
           "kvm"
+          "libvirt" 
           "libvirtd"
           "ceph"
         ];
