@@ -35,32 +35,26 @@
           virtualisation = {
             libvirtd = {
               enable = true;
+              # allowedBridges = [ "br0" ];
               qemu = {
                 package = pkgs.qemu_kvm;
                 swtpm.enable = true;
-                allowedBridges = [ "br0" ];
               };
             };
             spiceUSBRedirection.enable = true;
           };
           # disable monolithic deamon
-          systemd = {
-            services.libvirtd.enable = lib.mkForce false;
-            sockets = {
-              libvirtd.enable = lib.mkForce false;
-            lib.genAttrs
-              [
-                "virtqemud"
-                "virtnetworkd"
-                "virtstoraged"
-                "virtnodedevd"
-                "virtlogd"
-              ]
-              (_: {
-                wantedBy = [ "sockets.target" ];
-              });
-            };
-          };
+          # 1. Disable the monolithic daemon and its socket
+          systemd.services.libvirtd.enable = lib.mkForce false;
+          systemd.sockets.libvirtd.enable = lib.mkForce false;
+
+          # 2. Enable the modular daemon sockets (flat assignments merge safely in NixOS)
+          systemd.sockets.virtqemud.wantedBy = [ "sockets.target" ];
+          systemd.sockets.virtnetworkd.wantedBy = [ "sockets.target" ];
+          systemd.sockets.virtstoraged.wantedBy = [ "sockets.target" ];
+          systemd.sockets.virtnodedevd.wantedBy = [ "sockets.target" ];
+          systemd.sockets.virtlogd.wantedBy = [ "sockets.target" ];
+
           systemd.tmpfiles.rules = [ "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware" ];
           systemd.services.virtnetworkd.path = with pkgs; [
             nftables
